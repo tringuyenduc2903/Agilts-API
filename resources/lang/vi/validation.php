@@ -156,5 +156,6 @@ return [
     'attributes' => [
         'name' => 'tên',
         'password' => 'mật khẩu',
+        'current_password' => 'mật khẩu hiện tại',
     ],
 ];

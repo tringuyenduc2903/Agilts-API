@@ -157,5 +157,8 @@ return [
         'name' => 'tên',
         'password' => 'mật khẩu',
         'current_password' => 'mật khẩu hiện tại',
+        'phone_number' => 'số điện thoại',
+        'birthday' => 'ngày sinh',
+        'gender' => 'giới tính',
     ],
 ];

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\Gender;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -46,6 +47,10 @@ class Customer extends Authenticatable implements MustVerifyEmail
         'gender_preview',
     ];
 
+    protected $with = [
+        'socials',
+    ];
+
     /**
      * @return Attribute
      */
@@ -54,6 +59,14 @@ class Customer extends Authenticatable implements MustVerifyEmail
         return Attribute::get(
             fn(): ?string => isset($this->gender) ? Gender::valueForKey($this->gender) : null
         );
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function socials(): HasMany
+    {
+        return $this->hasMany(Social::class);
     }
 
     /**

@@ -17,5 +17,6 @@
     "Female": "Nữ",
     "Not Specified": "Không xác định",
     "The provided two factor authentication code was invalid.": "Mã xác thực hai yếu tố được cung cấp không hợp lệ.",
-    "The provided two factor recovery code was invalid.": "Mã dự phòng xác thực hai yếu tố được cung cấp không hợp lệ."
+    "The provided two factor recovery code was invalid.": "Mã dự phòng xác thực hai yếu tố được cung cấp không hợp lệ.",
+    "The provided password was incorrect.": "Mật khẩu được cung cấp không chính xác."
 }

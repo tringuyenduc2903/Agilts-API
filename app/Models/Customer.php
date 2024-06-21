@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\Gender;
+use DateTimeInterface;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -77,13 +78,18 @@ class Customer extends Authenticatable implements MustVerifyEmail
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime:d-m-Y H:i:s',
-            'phone_number_verified_at' => 'datetime:d-m-Y H:i:s',
-            'two_factor_confirmed_at' => 'datetime:d-m-Y H:i:s',
-            'deleted_at' => 'datetime:d-m-Y H:i:s',
-            'created_at' => 'datetime:d-m-Y H:i:s',
-            'updated_at' => 'datetime:d-m-Y H:i:s',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * @param DateTimeInterface $date
+     * @return string
+     */
+    protected function serializeDate(DateTimeInterface $date): string
+    {
+        return $date
+            ->timezone(config('app.timezone'))
+            ->format(config('app.timezone-format'));
     }
 }

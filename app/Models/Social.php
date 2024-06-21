@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 
 class Social extends Model
@@ -18,15 +19,13 @@ class Social extends Model
     ];
 
     /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
+     * @param DateTimeInterface $date
+     * @return string
      */
-    protected function casts(): array
+    protected function serializeDate(DateTimeInterface $date): string
     {
-        return [
-            'created_at' => 'datetime:d-m-Y H:i:s',
-            'updated_at' => 'datetime:d-m-Y H:i:s',
-        ];
+        return $date
+            ->timezone(config('app.timezone'))
+            ->format(config('app.timezone-format'));
     }
 }

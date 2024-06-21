@@ -69,6 +69,8 @@ return [
 
     'timezone' => env('APP_TIMEZONE', 'UTC'),
 
+    'timezone-format' => env('APP_TIME_FORMAT_LONG'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Locale Configuration

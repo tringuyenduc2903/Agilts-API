@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
-use DateTimeInterface;
+use App\Trait\Models\SwitchTimezoneTrait;
 use Illuminate\Database\Eloquent\Model;
 
 class Social extends Model
 {
+    use SwitchTimezoneTrait;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -17,15 +19,4 @@ class Social extends Model
         'provider_name',
         'customer_id',
     ];
-
-    /**
-     * @param DateTimeInterface $date
-     * @return string
-     */
-    protected function serializeDate(DateTimeInterface $date): string
-    {
-        return $date
-            ->timezone(config('app.timezone'))
-            ->format(config('app.timezone-format'));
-    }
 }

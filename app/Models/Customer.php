@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Enums\Gender;
-use DateTimeInterface;
+use App\Trait\Models\SwitchTimezoneTrait;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -15,6 +15,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 
 class Customer extends Authenticatable implements MustVerifyEmail
 {
+    use SwitchTimezoneTrait;
     use Notifiable;
     use SoftDeletes;
     use TwoFactorAuthenticatable;
@@ -31,6 +32,7 @@ class Customer extends Authenticatable implements MustVerifyEmail
         'email',
         'phone_number',
         'password',
+        'timezone',
     ];
 
     /**
@@ -59,7 +61,9 @@ class Customer extends Authenticatable implements MustVerifyEmail
     public function genderPreview(): Attribute
     {
         return Attribute::get(
-            fn(): ?string => isset($this->gender) ? Gender::valueForKey($this->gender) : null
+            fn(): ?string => isset($this->gender)
+                ? Gender::valueForKey($this->gender)
+                : null
         );
     }
 
@@ -80,18 +84,8 @@ class Customer extends Authenticatable implements MustVerifyEmail
     {
         return [
             'password' => 'hashed',
+            'remember_token' => 'hashed',
         ];
-    }
-
-    /**
-     * @param DateTimeInterface $date
-     * @return string
-     */
-    protected function serializeDate(DateTimeInterface $date): string
-    {
-        return $date
-            ->timezone(config('app.timezone'))
-            ->format(config('app.timezone-format'));
     }
 
     /**
@@ -102,7 +96,7 @@ class Customer extends Authenticatable implements MustVerifyEmail
         return Attribute::get(
             fn(?string $email_verified_at): ?string => $email_verified_at
                 ? Carbon::make($email_verified_at)
-                    ->timezone(config('app.timezone'))
+                    ->timezone(auth()->user()->timezone)
                     ->format(config('app.timezone-format'))
                 : null
         );

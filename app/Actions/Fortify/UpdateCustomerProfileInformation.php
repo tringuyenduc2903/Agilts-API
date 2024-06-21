@@ -51,6 +51,12 @@ class UpdateCustomerProfileInformation implements UpdatesUserProfileInformation
                 'integer',
                 Rule::in(Gender::keys()),
             ],
+            'timezone' => [
+                'required',
+                'string',
+                'max:30',
+                Rule::in(timezone_identifiers_list()),
+            ],
         ])->validate();
 
         $this->updateVerifiedUser($user, $input);

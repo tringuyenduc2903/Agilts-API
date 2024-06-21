@@ -9,6 +9,9 @@ Route::prefix(LaravelLocalization::setLocale())
     ->group(function () {
         Route::get('/', fn(): RedirectResponse => redirect(config('app.swagger_url')));
 
+        Route::get('/login', fn(): RedirectResponse => redirect(config('app.frontend_url')))
+            ->name('login');
+
         Route::get('/auth/redirect/{driver_name}', [AuthController::class, 'redirect'])
             ->name('auth.redirect');
 

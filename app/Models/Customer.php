@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 
 class Customer extends Authenticatable implements MustVerifyEmail
@@ -91,5 +92,19 @@ class Customer extends Authenticatable implements MustVerifyEmail
         return $date
             ->timezone(config('app.timezone'))
             ->format(config('app.timezone-format'));
+    }
+
+    /**
+     * @return Attribute
+     */
+    protected function emailVerifiedAt(): Attribute
+    {
+        return Attribute::get(
+            fn(?string $email_verified_at): ?string => $email_verified_at
+                ? Carbon::make($email_verified_at)
+                    ->timezone(config('app.timezone'))
+                    ->format(config('app.timezone-format'))
+                : null
+        );
     }
 }

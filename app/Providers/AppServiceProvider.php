@@ -3,14 +3,10 @@
 namespace App\Providers;
 
 use Illuminate\Auth\Notifications\ResetPassword;
-use Illuminate\Foundation\Support\Providers\RouteServiceProvider;
 use Illuminate\Support\ServiceProvider;
-use Mcamara\LaravelLocalization\Traits\LoadsTranslatedCachedRoutes;
 
 class AppServiceProvider extends ServiceProvider
 {
-    use LoadsTranslatedCachedRoutes;
-
     /**
      * Register any application services.
      */
@@ -30,7 +26,5 @@ class AppServiceProvider extends ServiceProvider
             $token,
             $notifiable->getEmailForPasswordReset()
         ));
-
-        RouteServiceProvider::loadCachedRoutesUsing(fn() => $this->loadCachedRoutes());
     }
 }

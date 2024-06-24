@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Trait\Models\SwitchTimezoneTrait;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Social extends Model
 {
@@ -19,4 +20,12 @@ class Social extends Model
         'provider_name',
         'customer_id',
     ];
+
+    /**
+     * @return BelongsTo
+     */
+    public function customer(): BelongsTo
+    {
+        return $this->belongsTo(Customer::class);
+    }
 }

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use App\Models\Social;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Contracts\User;
@@ -29,13 +28,19 @@ class AuthController extends Controller
     {
         $user = Socialite::driver($driver_name)->user();
 
-        $customer = Customer::where('email', $user->getEmail())
+        $social = Social::whereProviderId($user->getId())
+            ->whereProviderName($driver_name)
             ->first();
 
-        if ($customer)
-            $this->login($customer, $user, $driver_name);
-        else
-            $this->register($user, $driver_name);
+        $customer = $social
+            ? $social->customer
+            : Customer::whereEmail($user->getEmail())->first();
+
+        if (auth()->check())
+            if ($customer)
+                $this->login($customer, $user, $driver_name);
+            else
+                $this->register($user, $driver_name);
 
         return redirect(config('app.frontend_url'));
     }
@@ -56,6 +61,12 @@ class AuthController extends Controller
         ]);
 
         auth()->login($customer);
+
+        if (
+            $user->getEmail() === $customer->email &&
+            !$customer->hasVerifiedEmail()
+        )
+            $customer->markEmailAsVerified();
 
         session()->regenerate();
     }
@@ -80,7 +91,7 @@ class AuthController extends Controller
             'customer_id' => $customer->id,
         ]);
 
-        event(new Registered($customer));
+        $customer->markEmailAsVerified();
 
         auth()->login($customer);
 

@@ -18,6 +18,7 @@ class Address extends Model
 
     protected $appends = [
         'address_preview',
+        'type_preview',
     ];
 
     /**
@@ -47,6 +48,16 @@ class Address extends Model
     {
         return Attribute::get(
             fn(): string => "$this->address_detail, $this->ward, $this->district, $this->province"
+        );
+    }
+
+    /**
+     * @return Attribute
+     */
+    protected function typePreview(): Attribute
+    {
+        return Attribute::get(
+            fn(): string => \App\Enums\Address\Branch::valueForKey($this->type)
         );
     }
 }

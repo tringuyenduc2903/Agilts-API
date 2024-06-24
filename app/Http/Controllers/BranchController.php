@@ -22,8 +22,8 @@ class BranchController extends Controller
         $branches->whereHas(
             'addresses',
             fn(Builder $query): Builder => $query
-                ->where('type', \App\Enums\Address\Branch::SHOP)
-                ->where('default', true)
+                ->whereType(\App\Enums\Address\Branch::SHOP)
+                ->whereDefault(true)
         );
 
         $filters = ['country', 'province', 'district', 'ward'];

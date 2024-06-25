@@ -36,11 +36,16 @@ class AuthController extends Controller
             ? $social->customer
             : Customer::whereEmail($user->getEmail())->first();
 
-        if (auth()->check())
-            if ($customer)
-                $this->login($customer, $user, $driver_name);
-            else
-                $this->register($user, $driver_name);
+        if (!auth()->check()) {
+            auth()->logout();
+
+            session()->regenerate();
+        }
+
+        if ($customer)
+            $this->login($customer, $user, $driver_name);
+        else
+            $this->register($user, $driver_name);
 
         return redirect(config('app.frontend_url'));
     }
@@ -60,13 +65,13 @@ class AuthController extends Controller
             'customer_id' => $customer->id,
         ]);
 
-        auth()->login($customer);
-
         if (
             $user->getEmail() === $customer->email &&
             !$customer->hasVerifiedEmail()
         )
             $customer->markEmailAsVerified();
+
+        auth()->login($customer, true);
 
         session()->regenerate();
     }
@@ -93,7 +98,7 @@ class AuthController extends Controller
 
         $customer->markEmailAsVerified();
 
-        auth()->login($customer);
+        auth()->login($customer, true);
 
         session()->regenerate();
     }

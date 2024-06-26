@@ -161,5 +161,12 @@ return [
         'birthday' => 'ngày sinh',
         'gender' => 'giới tính',
         'timezone' => 'múi giờ',
+        'default' => 'đặt làm mặc định',
+        'type' => 'kiểu',
+        'country' => 'quốc gia',
+        'province' => 'tỉnh/thành phố',
+        'district' => 'quận/huyện/thị xã',
+        'ward' => 'xã/phường/thị trấn',
+        'address_detail' => 'địa chỉ chi tiết',
     ],
 ];

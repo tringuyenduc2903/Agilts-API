@@ -42,7 +42,7 @@ class AddressRequest extends FormRequest
                 'max:100',
             ],
             'ward' => [
-                'required',
+                'nullable',
                 'string',
                 'max:100',
             ],

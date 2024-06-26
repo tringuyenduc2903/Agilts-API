@@ -17,4 +17,8 @@ Route::localized(function () {
     Route::apiResource('address', AddressController::class)
         ->except('show')
         ->middleware('auth:sanctum');
+
+    Route::apiResource('social', SocialController::class)
+        ->only(['index', 'destroy'])
+        ->middleware('auth:sanctum');
 });

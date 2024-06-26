@@ -50,7 +50,7 @@ class AddressController extends Controller
         } else {
             $model = Address::class;
 
-            abort(404, "No query results for model [{$model}] $address_id");
+            abort(404, "No query results for model [$model] $address_id");
         }
 
         return response()->json('');
@@ -71,7 +71,7 @@ class AddressController extends Controller
         } else {
             $model = Address::class;
 
-            abort(404, "No query results for model [{$model}] $address_id");
+            abort(404, "No query results for model [$model] $address_id");
         }
 
         return response()->json('');

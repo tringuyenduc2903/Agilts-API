@@ -160,5 +160,6 @@ return [
         'phone_number' => 'số điện thoại',
         'birthday' => 'ngày sinh',
         'gender' => 'giới tính',
+        'timezone' => 'múi giờ',
     ],
 ];

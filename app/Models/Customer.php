@@ -7,6 +7,7 @@ use App\Trait\Models\SwitchTimezoneTrait;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -51,10 +52,6 @@ class Customer extends Authenticatable implements MustVerifyEmail
         'gender_preview',
     ];
 
-    protected $with = [
-        'socials',
-    ];
-
     /**
      * @return Attribute
      */
@@ -73,6 +70,14 @@ class Customer extends Authenticatable implements MustVerifyEmail
     public function socials(): HasMany
     {
         return $this->hasMany(Social::class);
+    }
+
+    /**
+     * @return MorphMany
+     */
+    public function addresses(): MorphMany
+    {
+        return $this->morphMany(Address::class, 'addressable');
     }
 
     /**

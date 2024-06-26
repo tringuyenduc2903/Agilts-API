@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\BranchController;
+namespace App\Http\Controllers;
+
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -12,4 +13,8 @@ Route::localized(function () {
 
     Route::apiResource('branch', BranchController::class)
         ->only(['index', 'show']);
+
+    Route::apiResource('address', AddressController::class)
+        ->except('show')
+        ->middleware('auth:sanctum');
 });

@@ -20,5 +20,7 @@
     "The provided two factor recovery code was invalid.": "Mã dự phòng xác thực hai yếu tố được cung cấp không hợp lệ.",
     "The provided password was incorrect.": "Mật khẩu được cung cấp không chính xác.",
     "Shop": "Cửa hàng",
-    "Warehouse": "Kho"
+    "Warehouse": "Kho",
+    "Home": "Nhà riêng",
+    "Company": "Công ty"
 }

@@ -11,6 +11,28 @@ class Address extends Model
 {
     use SwitchTimezoneTrait;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'addressable_id',
+        'addressable_type',
+        'country',
+        'province',
+        'district',
+        'ward',
+        'address_detail',
+        'type',
+        'default',
+    ];
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
     protected $hidden = [
         'addressable_type',
         'addressable_id',
@@ -57,7 +79,11 @@ class Address extends Model
     protected function typePreview(): Attribute
     {
         return Attribute::get(
-            fn(): string => \App\Enums\Address\Branch::valueForKey($this->type)
+            fn(): ?string => match ($this->addressable_type) {
+                Branch::class => \App\Enums\Address\Branch::valueForKey($this->type),
+                Customer::class => \App\Enums\Address\Customer::valueForKey($this->type),
+                default => null,
+            }
         );
     }
 }

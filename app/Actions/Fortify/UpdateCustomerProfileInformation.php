@@ -59,11 +59,11 @@ class UpdateCustomerProfileInformation implements UpdatesUserProfileInformation
             ],
         ])->validate();
 
-        $this->updateVerifiedUser($user, $input);
+        $user->fill($validate);
 
-        $user
-            ->fill($validate)
-            ->save();
+        $this->updateVerifiedUser($user);
+
+        $user->save();
     }
 
     /**

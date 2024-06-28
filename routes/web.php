@@ -12,6 +12,7 @@ Route::localized(function () {
         ->name('login');
 
     Route::prefix('auth')
+        ->middleware('guest')
         ->group(function () {
             Route::get('redirect/{driver_name}', [AuthController::class, 'redirect'])
                 ->name('auth.redirect');

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Provider;
 use App\Models\Customer;
 use App\Models\Social;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Contracts\User;
@@ -11,6 +13,10 @@ use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
 {
+    protected User $user;
+
+    protected int $provider_name;
+
     /**
      * @param string $driver_name
      * @return RedirectResponse
@@ -26,47 +32,43 @@ class AuthController extends Controller
      */
     public function callback(string $driver_name): RedirectResponse
     {
-        $user = Socialite::driver($driver_name)->user();
+        $this->user = Socialite::driver($driver_name)->user();
 
-        $social = Social::whereProviderId($user->getId())
-            ->whereProviderName($driver_name)
+        $this->provider_name = Provider::keyForValue($driver_name);
+
+        $customer = Customer::whereEmail($this->user->getEmail())
+            ->orWhereHas(
+                'socials',
+                function (Builder $query): Builder {
+                    /** @var Social $query */
+                    return $query
+                        ->whereProviderId($this->user->getId())
+                        ->whereProviderName($this->provider_name);
+                })
             ->first();
 
-        $customer = $social
-            ? $social->customer
-            : Customer::whereEmail($user->getEmail())->first();
-
-        if (!auth()->check()) {
-            auth()->logout();
-
-            session()->regenerate();
-        }
-
-        if ($customer)
-            $this->login($customer, $user, $driver_name);
-        else
-            $this->register($user, $driver_name);
+        $customer
+            ? $this->login($customer)
+            : $this->register();
 
         return redirect(config('app.frontend_url'));
     }
 
     /**
      * @param Customer $customer
-     * @param User $user
-     * @param string $driver_name
      * @return void
      */
-    protected function login(Customer $customer, User $user, string $driver_name)
+    protected function login(Customer $customer)
     {
         Social::createOrFirst([
-            'provider_id' => $user->getId(),
-            'provider_name' => $driver_name,
+            'provider_id' => $this->user->getId(),
+            'provider_name' => $this->provider_name,
         ], [
             'customer_id' => $customer->id,
         ]);
 
         if (
-            $user->getEmail() === $customer->email &&
+            $this->user->getEmail() === $customer->email &&
             !$customer->hasVerifiedEmail()
         )
             $customer->markEmailAsVerified();
@@ -77,21 +79,20 @@ class AuthController extends Controller
     }
 
     /**
-     * @param User $user
-     * @param string $driver_name
      * @return void
      */
-    protected function register(User $user, string $driver_name)
+    protected function register()
     {
         $customer = Customer::create([
-            'name' => $user->getName(),
-            'email' => $user->getEmail(),
+            'name' => $this->user->getName(),
+            'email' => $this->user->getEmail(),
             'password' => Str::password(20),
+            'timezone' => config('app.timezone'),
         ]);
 
         Social::updateOrCreate([
-            'provider_id' => $user->getId(),
-            'provider_name' => $driver_name,
+            'provider_id' => $this->user->getId(),
+            'provider_name' => $this->provider_name,
         ], [
             'customer_id' => $customer->id,
         ]);

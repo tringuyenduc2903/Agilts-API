@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Address;
 use App\Models\Branch;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -21,9 +22,12 @@ class BranchController extends Controller
 
         $branches->whereHas(
             'addresses',
-            fn(Builder $query): Builder => $query
-                ->whereType(\App\Enums\Address\Branch::SHOP)
-                ->whereDefault(true)
+            function (Builder $query): Builder {
+                /** @var Address::class $query */
+                return $query
+                    ->whereType(\App\Enums\Address\Branch::SHOP)
+                    ->whereDefault(true);
+            }
         );
 
         $filters = ['country', 'province', 'district', 'ward'];

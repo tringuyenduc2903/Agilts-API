@@ -107,11 +107,15 @@ class Customer extends Authenticatable implements MustVerifyEmail
     protected function emailVerifiedAt(): Attribute
     {
         return Attribute::get(
-            fn(?string $email_verified_at): ?string => $email_verified_at
-                ? Carbon::make($email_verified_at)
-                    ->timezone(auth()->user()->timezone)
-                    ->format(config('app.timezone-format.long'))
-                : null
+            function (?string $email_verified_at): ?string {
+                $user = auth()->user();
+
+                return $user && $email_verified_at
+                    ? Carbon::make($email_verified_at)
+                        ->timezone($user->timezone)
+                        ->format(config('app.timezone-format.long'))
+                    : $email_verified_at;
+            }
         );
     }
 }

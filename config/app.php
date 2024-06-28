@@ -69,7 +69,10 @@ return [
 
     'timezone' => env('APP_TIMEZONE', 'UTC'),
 
-    'timezone-format' => env('APP_TIME_FORMAT_LONG'),
+    'timezone-format' => [
+        'long' => env('APP_TIME_FORMAT_LONG'),
+        'short' => env('APP_TIME_FORMAT_SHORT'),
+    ],
 
     /*
     |--------------------------------------------------------------------------

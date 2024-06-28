@@ -81,6 +81,14 @@ class Customer extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     * @return HasMany
+     */
+    public function identifications(): HasMany
+    {
+        return $this->hasMany(Identification::class);
+    }
+
+    /**
      * Get the attributes that should be cast.
      *
      * @return array<string, string>
@@ -102,7 +110,7 @@ class Customer extends Authenticatable implements MustVerifyEmail
             fn(?string $email_verified_at): ?string => $email_verified_at
                 ? Carbon::make($email_verified_at)
                     ->timezone(auth()->user()->timezone)
-                    ->format(config('app.timezone-format'))
+                    ->format(config('app.timezone-format.long'))
                 : null
         );
     }

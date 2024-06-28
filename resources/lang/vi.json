@@ -22,5 +22,13 @@
     "Shop": "Cửa hàng",
     "Warehouse": "Kho",
     "Home": "Nhà riêng",
-    "Company": "Công ty"
+    "Company": "Công ty",
+    "Identity card (9 numbers)": "Chứng minh nhân dân 9 số",
+    "Identity card (12 numbers)": "Chứng minh nhân dân 12 số",
+    "Citizen identification (barcode)": "Căn cước công dân mã vạch\n",
+    "Citizen identification (chip)": "Căn cước công dân gắn chip",
+    "Identity card": "Thẻ Căn cước",
+    "Diplomatic passport": "Hộ chiếu ngoại giao",
+    "Official passport": "Hộ chiếu công vụ",
+    "Popular passport": "Hộ chiếu phổ thông"
 }

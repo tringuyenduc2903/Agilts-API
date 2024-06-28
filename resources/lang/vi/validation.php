@@ -168,5 +168,9 @@ return [
         'district' => 'quận/huyện/thị xã',
         'ward' => 'xã/phường/thị trấn',
         'address_detail' => 'địa chỉ chi tiết',
+        'number' => 'số',
+        'issued_name' => 'nơi cấp',
+        'issuance_date' => 'ngày cấp',
+        'expiry_date' => 'ngày hết hạn',
     ],
 ];

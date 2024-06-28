@@ -16,6 +16,6 @@ trait SwitchTimezoneTrait
             ? auth()->user()->timezone
             : config('app.timezone');
 
-        return $date->timezone($timezone)->format(config('app.timezone-format'));
+        return $date->timezone($timezone)->format(config('app.timezone-format.long'));
     }
 }

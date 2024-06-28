@@ -43,15 +43,9 @@ class AddressController extends Controller
      */
     public function update(int $address_id, AddressRequest $request): JsonResponse
     {
-        $address = auth()->user()->addresses()->find($address_id);
-
-        if ($address) {
-            $address->update($request->validated());
-        } else {
-            $model = Address::class;
-
-            abort(404, "No query results for model [$model] $address_id");
-        }
+        auth()->user()->addresses()
+            ->findOrFail($address_id)
+            ->update($request->validated());
 
         return response()->json('');
     }
@@ -64,15 +58,9 @@ class AddressController extends Controller
      */
     public function destroy(int $address_id): JsonResponse
     {
-        $address = auth()->user()->addresses()->find($address_id);
-
-        if ($address) {
-            $address->delete();
-        } else {
-            $model = Address::class;
-
-            abort(404, "No query results for model [$model] $address_id");
-        }
+        auth()->user()->addresses()
+            ->findOrFail($address_id)
+            ->delete();
 
         return response()->json('');
     }

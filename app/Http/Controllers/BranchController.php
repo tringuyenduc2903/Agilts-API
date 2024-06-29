@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Address;
 use App\Models\Branch;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -19,16 +18,6 @@ class BranchController extends Controller
     public function index(Request $request): LengthAwarePaginator
     {
         $branches = Branch::query();
-
-        $branches->whereHas(
-            'addresses',
-            function (Builder $query): Builder {
-                /** @var Address::class $query */
-                return $query
-                    ->whereType(\App\Enums\Address\Branch::SHOP)
-                    ->whereDefault(true);
-            }
-        );
 
         $filters = ['country', 'province', 'district', 'ward'];
 

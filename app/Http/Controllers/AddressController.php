@@ -16,7 +16,8 @@ class AddressController extends Controller
      */
     public function index(): Collection
     {
-        return auth()->user()->addresses;
+        return auth()->user()->addresses
+            ->append('type_preview');
     }
 
     /**

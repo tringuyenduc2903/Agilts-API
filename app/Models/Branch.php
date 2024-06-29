@@ -4,21 +4,21 @@ namespace App\Models;
 
 use App\Trait\Models\SwitchTimezoneTrait;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class Branch extends Model
 {
     use SwitchTimezoneTrait;
 
     protected $with = [
-        'addresses',
+        'address',
     ];
 
     /**
-     * @return MorphMany
+     * @return MorphOne
      */
-    public function addresses(): MorphMany
+    public function address(): MorphOne
     {
-        return $this->morphMany(Address::class, 'addressable');
+        return $this->morphOne(Address::class, 'addressable');
     }
 }

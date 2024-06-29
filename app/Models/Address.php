@@ -40,7 +40,6 @@ class Address extends Model
 
     protected $appends = [
         'address_preview',
-        'type_preview',
     ];
 
     /**
@@ -49,6 +48,21 @@ class Address extends Model
     public function addressable(): MorphTo
     {
         return $this->morphTo();
+    }
+
+    /**
+     * @return array
+     */
+    public function getHidden(): array
+    {
+        if ($this->addressable_type !== Branch::class)
+            return parent::getHidden();
+
+        return array_merge(
+            parent::getHidden(), [
+            'type',
+            'default'
+        ]);
     }
 
     /**
@@ -79,11 +93,7 @@ class Address extends Model
     protected function typePreview(): Attribute
     {
         return Attribute::get(
-            fn(): ?string => match ($this->addressable_type) {
-                Branch::class => \App\Enums\Address\Branch::valueForKey($this->type),
-                Customer::class => \App\Enums\Address\Customer::valueForKey($this->type),
-                default => null,
-            }
+            fn(): string => \App\Enums\Address\Customer::valueForKey($this->type)
         );
     }
 }

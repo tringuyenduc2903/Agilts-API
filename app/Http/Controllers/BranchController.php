@@ -30,15 +30,4 @@ class BranchController extends Controller
 
         return $branches->paginate();
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param Branch $branch
-     * @return Branch
-     */
-    public function show(Branch $branch): Branch
-    {
-        return $branch;
-    }
 }

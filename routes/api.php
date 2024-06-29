@@ -22,5 +22,5 @@ Route::localized(function () {
     });
 
     Route::apiResource('branch', BranchController::class)
-        ->only(['index', 'show']);
+        ->only('index');
 });

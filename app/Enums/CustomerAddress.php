@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Enums\Address;
+namespace App\Enums;
 
 use Rexlabs\Enum\Enum;
 
 /**
- * The Customer enum.
+ * The CustomerAddress enum.
  *
  * @method static self HOME()
  * @method static self COMPANY()
  */
-class Customer extends Enum
+class CustomerAddress extends Enum
 {
     const HOME = 0;
     const COMPANY = 1;

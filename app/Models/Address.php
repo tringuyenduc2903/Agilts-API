@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\CustomerAddress;
 use App\Trait\Models\SwitchTimezoneTrait;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
@@ -93,7 +94,7 @@ class Address extends Model
     protected function typePreview(): Attribute
     {
         return Attribute::get(
-            fn(): string => \App\Enums\Address\Customer::valueForKey($this->type)
+            fn(): string => CustomerAddress::valueForKey($this->type)
         );
     }
 }

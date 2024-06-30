@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Enums\Address\Customer;
+use App\Enums\CustomerAddress;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -24,7 +24,7 @@ class AddressRequest extends FormRequest
             'type' => [
                 'required',
                 'integer',
-                Rule::in(Customer::keys()),
+                Rule::in(CustomerAddress::keys()),
             ],
             'country' => [
                 'required',

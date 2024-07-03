@@ -36,8 +36,7 @@ class UpdateCustomerProfileInformation implements UpdatesUserProfileInformation
             'phone_number' => [
                 'nullable',
                 'string',
-                'min:12',
-                'max:13',
+                'phone:VN',
                 Rule::unique(Customer::class)->ignore($user->id),
             ],
             'birthday' => [

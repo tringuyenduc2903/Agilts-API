@@ -148,6 +148,7 @@ return [
     'url' => 'Trường :attribute phải là một URL hợp lệ.',
     'ulid' => 'Trường :attribute phải là một ULID hợp lệ.',
     'uuid' => 'Trường :attribute phải là một UUID hợp lệ.',
+    'phone' => 'Trường :attribute phải là số điện thoại hợp lệ.',
     'custom' => [
         'attribute-name' => [
             'rule-name' => 'thông điệp tùy chỉnh',

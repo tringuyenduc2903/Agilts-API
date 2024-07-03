@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Branch;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 class BranchController extends Controller
 {
@@ -13,9 +12,9 @@ class BranchController extends Controller
      * Display a listing of the resource.
      *
      * @param Request $request
-     * @return LengthAwarePaginator
+     * @return array
      */
-    public function index(Request $request): LengthAwarePaginator
+    public function index(Request $request): array
     {
         $branches = Branch::query();
 
@@ -24,10 +23,20 @@ class BranchController extends Controller
         foreach ($filters as $filter)
             if ($request->exists($filter))
                 $branches->whereHas(
-                    'addresses',
+                    'address',
                     fn(Builder $query): Builder => $query->where($filter, $request->input($filter))
                 );
 
-        return $branches->paginate();
+        $paginator = $branches->paginate($request->input('per_page'));
+
+        return [
+            'data' => $paginator->items(),
+            'total_pages' => $paginator->lastPage(),
+            'from' => $paginator->firstItem(),
+            'to' => $paginator->lastItem(),
+            'per_page' => $paginator->perPage(),
+            'current_page' => $paginator->currentPage(),
+            'total' => $paginator->total(),
+        ];
     }
 }

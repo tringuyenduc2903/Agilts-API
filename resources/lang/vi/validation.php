@@ -150,8 +150,8 @@ return [
     'uuid' => 'Trường :attribute phải là một UUID hợp lệ.',
     'phone' => 'Trường :attribute phải là số điện thoại hợp lệ.',
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'thông điệp tùy chỉnh',
+        'size' => [
+            'string_2' => 'Trường :attribute phải là :size1 ký tự hoặc :size2 ký tự.',
         ],
     ],
     'attributes' => [

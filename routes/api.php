@@ -26,4 +26,7 @@ Route::localized(function () {
 
     Route::apiResource('filter', FilterController::class)
         ->only('index');
+
+    Route::apiResource('product', ProductController::class)
+        ->only(['index', 'show']);
 });

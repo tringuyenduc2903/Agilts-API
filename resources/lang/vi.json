@@ -23,5 +23,21 @@
     "Company": "Công ty",
     "Identity card": "Chứng minh nhân dân",
     "Citizen identification": "Căn cước công dân",
-    "Passport": "Hộ chiếu"
+    "Passport": "Hộ chiếu",
+    "Storage": "Lưu kho",
+    "Sold": "Đã bán",
+    "In stock": "Còn hàng",
+    "Out of stock": "Hết hàng",
+    "New product": "Sản phẩm mới",
+    "Used product": "Sản phẩm cũ",
+    "Refurbished product": "Sản phẩm tân trang",
+    "Not Visible Individually": "Không hiển thị riêng lẻ",
+    "Search": "Tìm kiếm",
+    "Catalog and Search": "Catalog và Tìm kiếm",
+    "Type": "Loại",
+    "Min price": "Giá thấp nhất",
+    "Max price": "Giá cao nhất",
+    "Color": "Màu sắc",
+    "Model name": "Tên mẫu",
+    "Category": "Thể loại"
 }

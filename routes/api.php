@@ -23,4 +23,7 @@ Route::localized(function () {
 
     Route::apiResource('branch', BranchController::class)
         ->only('index');
+
+    Route::apiResource('filter', FilterController::class)
+        ->only('index');
 });

@@ -74,7 +74,7 @@ class Address extends Model
     protected function casts(): array
     {
         return [
-            'default' => 'bool',
+            'default' => 'boolean',
         ];
     }
 

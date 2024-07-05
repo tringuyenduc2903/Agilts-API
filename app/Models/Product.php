@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Casts\ProductImage;
-use App\Casts\ProductVideo;
 use App\Enums\ProductStatus;
 use App\Enums\ProductType;
 use App\Enums\ProductVisibility;
@@ -40,8 +38,6 @@ class Product extends Model
     protected function casts(): array
     {
         return [
-            'images' => ProductImage::class,
-            'videos' => ProductVideo::class,
             'enabled' => 'boolean',
             'specifications' => 'array',
         ];
@@ -74,6 +70,41 @@ class Product extends Model
     {
         return Attribute::get(
             fn(int $type): string => ProductType::valueForKey($type)
+        );
+    }
+
+    /**
+     * @return Attribute
+     */
+    protected function images(): Attribute
+    {
+        return Attribute::get(
+            function (string $images): array {
+                $items = json_decode($images);
+
+                foreach ($items as $item)
+                    $item->hided = (bool)$item->hided;
+
+                return $items;
+            }
+        );
+    }
+
+    /**
+     * @return Attribute
+     */
+    protected function videos(): Attribute
+    {
+        return Attribute::get(
+            function (string $videos): array {
+                $items = json_decode($videos);
+
+                foreach ($items as $item)
+                    $item->video = json_decode($item->video);
+
+                return $items;
+
+            }
         );
     }
 

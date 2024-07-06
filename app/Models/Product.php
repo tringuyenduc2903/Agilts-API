@@ -82,8 +82,14 @@ class Product extends Model
             function (string $images): array {
                 $items = json_decode($images);
 
-                foreach ($items as $item)
-                    $item->hided = (bool)$item->hided;
+                foreach ($items as $index => $item) {
+                    $item->image = secure_url(config('filesystems.disks.product.url') . $item->image);
+
+                    if ($item->hided)
+                        unset($items[$index]);
+
+                    unset($item->hided);
+                }
 
                 return $items;
             }
@@ -99,8 +105,19 @@ class Product extends Model
             function (string $videos): array {
                 $items = json_decode($videos);
 
-                foreach ($items as $item)
+                foreach ($items as $item) {
                     $item->video = json_decode($item->video);
+
+                    if (is_null($item->title))
+                        $item->title = $item->video->title;
+
+                    if (is_null($item->image))
+                        $item->image = $item->video->image;
+                    else
+                        $item->image = secure_url(config('filesystems.disks.product.url') . $item->image);
+
+                    unset($item->video->title, $item->video->image);
+                }
 
                 return $items;
 

@@ -35,6 +35,9 @@ class CreateNewCustomer implements CreatesNewUsers
             'password' => $this->passwordRules(),
         ])->validate();
 
-        return Customer::create($validate);
+        return Customer::create(array_merge(
+            $validate, [
+            'timezone' => config('app.timezone'),
+        ]));
     }
 }

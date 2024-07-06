@@ -4,8 +4,8 @@ namespace App\Actions\Fortify;
 
 use App\Enums\Gender;
 use App\Models\Customer;
-use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Laravel\Fortify\Contracts\UpdatesUserProfileInformation;
@@ -42,8 +42,8 @@ class UpdateCustomerProfileInformation implements UpdatesUserProfileInformation
             'birthday' => [
                 'nullable',
                 'date',
-                'before_or_equal:' . Carbon::now()->subYears(16),
-                'after_or_equal:' . Carbon::now()->subYears(100),
+                'before_or_equal:' . Carbon::now($user->timezone)->subYears(16),
+                'after_or_equal:' . Carbon::now($user->timezone)->subYears(100),
             ],
             'gender' => [
                 'nullable',

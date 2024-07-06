@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use App\Models\Identification;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Carbon;
 use Illuminate\Validation\Rule;
 
 class IdentificationRequest extends FormRequest
@@ -64,6 +65,7 @@ class IdentificationRequest extends FormRequest
                 'required',
                 'date',
                 'after:issuance_date',
+                'after:' . Carbon::now(auth()->user()->timezone),
             ],
         ];
     }

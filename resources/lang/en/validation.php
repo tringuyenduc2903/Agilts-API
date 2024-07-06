@@ -174,8 +174,8 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'size' => [
+            'string_2' => 'The :attribute field must be :size1 characters or :size2 characters.',
         ],
     ],
 

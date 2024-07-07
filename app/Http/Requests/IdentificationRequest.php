@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Models\Identification;
 use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Carbon;
 use Illuminate\Validation\Rule;
@@ -21,6 +22,14 @@ class IdentificationRequest extends FormRequest
             'default' => [
                 'required',
                 'boolean',
+                Rule::when(
+                    is_null(auth()->user()->identifications()->whereDefault(true)->first()),
+                    'accepted'
+                ),
+                Rule::unique(Identification::class)->where(function (Builder $query) {
+                    /** @var Identification $query */
+                    return $query->whereCustomerId(auth()->user()->id);
+                }),
             ],
             'type' => [
                 'required',

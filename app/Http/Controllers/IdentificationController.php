@@ -58,9 +58,15 @@ class IdentificationController extends Controller
      */
     public function destroy(int $identification_id): JsonResponse
     {
-        auth()->user()->identifications()
-            ->findOrFail($identification_id)
-            ->delete();
+        $identification = auth()->user()->identifications()
+            ->findOrFail($identification_id);
+
+        if ((bool)$identification->default === true)
+            abort(403, trans('Default :name cannot be deleted.', [
+                'name' => trans('identification'),
+            ]));
+
+        $identification->delete();
 
         return response()->json('');
     }

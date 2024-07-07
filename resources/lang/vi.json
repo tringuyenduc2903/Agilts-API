@@ -39,5 +39,7 @@
     "Max price": "Giá cao nhất",
     "Color": "Màu sắc",
     "Model name": "Tên mẫu",
-    "Category": "Thể loại"
+    "Category": "Thể loại",
+    "Default :name cannot be deleted.": "Không thể xóa :name mặc định.",
+    "identification": "hồ sơ"
 }

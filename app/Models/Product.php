@@ -83,7 +83,7 @@ class Product extends Model
                 $items = json_decode($images);
 
                 foreach ($items as $index => $item) {
-                    $item->image = secure_url(config('filesystems.disks.product.url') . $item->image);
+                    $item->image = productImageUrl($item->image);
 
                     if ($item->hided)
                         unset($items[$index]);
@@ -114,7 +114,7 @@ class Product extends Model
                     if (is_null($item->image))
                         $item->image = $item->video->image;
                     else
-                        $item->image = secure_url(config('filesystems.disks.product.url') . $item->image);
+                        $item->image = productImageUrl($item->image);
 
                     unset($item->video->title, $item->video->image);
                 }

@@ -47,7 +47,7 @@ return [
         'product' => [
             'driver' => 'local',
             'root' => storage_path('app/public/product'),
-            'url' => env('APP_URL') . '/storage/product',
+            'url' => env('ADMIN_URL') . '/storage/product',
             'visibility' => 'public',
             'throw' => false,
         ],

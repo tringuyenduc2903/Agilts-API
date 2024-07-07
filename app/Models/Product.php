@@ -91,7 +91,7 @@ class Product extends Model
                     unset($item->hided);
                 }
 
-                return $items;
+                return array_values($items);
             }
         );
     }

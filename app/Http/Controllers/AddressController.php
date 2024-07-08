@@ -59,9 +59,15 @@ class AddressController extends Controller
      */
     public function destroy(int $address_id): JsonResponse
     {
-        auth()->user()->addresses()
-            ->findOrFail($address_id)
-            ->delete();
+        $address = auth()->user()->addresses()
+            ->findOrFail($address_id);
+
+        if ($address->default)
+            abort(403, trans('Default :name cannot be deleted.', [
+                'name' => trans('address'),
+            ]));
+
+        $address->delete();
 
         return response()->json('');
     }

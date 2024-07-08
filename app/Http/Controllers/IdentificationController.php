@@ -61,7 +61,7 @@ class IdentificationController extends Controller
         $identification = auth()->user()->identifications()
             ->findOrFail($identification_id);
 
-        if ((bool)$identification->default === true)
+        if ($identification->default)
             abort(403, trans('Default :name cannot be deleted.', [
                 'name' => trans('identification'),
             ]));

@@ -41,5 +41,6 @@
     "Model name": "Tên mẫu",
     "Category": "Thể loại",
     "Default :name cannot be deleted.": "Không thể xóa :name mặc định.",
-    "identification": "hồ sơ"
+    "identification": "hồ sơ",
+    "address": "địa chỉ"
 }

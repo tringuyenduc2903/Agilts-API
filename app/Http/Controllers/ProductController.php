@@ -53,7 +53,7 @@ class ProductController extends Controller
 
         $options = [
             'color',
-            'model_name',
+            'version',
         ];
 
         foreach ($options as $option)

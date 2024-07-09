@@ -33,10 +33,10 @@ class FilterController extends Controller
             'data' => ProductOption::groupBy('id', 'color')
                 ->pluck('color', 'color'),
         ], [
-            'name' => 'model_name',
-            'label' => trans('Model name'),
-            'data' => ProductOption::groupBy('id', 'model_name')
-                ->pluck('model_name', 'model_name'),
+            'name' => 'version',
+            'label' => trans('Version'),
+            'data' => ProductOption::groupBy('id', 'version')
+                ->pluck('version', 'version'),
         ], [
             'name' => 'category',
             'label' => trans('Category'),

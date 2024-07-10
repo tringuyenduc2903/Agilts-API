@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Address;
+use App\Models\Identification;
+use App\Observers\AddressObserver;
+use App\Observers\IdentificationObserver;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Support\ServiceProvider;
 
@@ -26,5 +30,8 @@ class AppServiceProvider extends ServiceProvider
             $token,
             $notifiable->getEmailForPasswordReset()
         ));
+
+        Identification::observe(IdentificationObserver::class);
+        Address::observe(AddressObserver::class);
     }
 }

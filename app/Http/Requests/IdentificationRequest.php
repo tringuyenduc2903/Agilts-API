@@ -4,7 +4,6 @@ namespace App\Http\Requests;
 
 use App\Models\Identification;
 use Illuminate\Contracts\Validation\ValidationRule;
-use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Carbon;
 use Illuminate\Validation\Rule;
@@ -22,14 +21,6 @@ class IdentificationRequest extends FormRequest
             'default' => [
                 'required',
                 'boolean',
-                Rule::when(
-                    is_null(auth()->user()->identifications()->whereDefault(true)->first()),
-                    'accepted'
-                ),
-                Rule::unique(Identification::class)->where(function (Builder $query) {
-                    /** @var Identification $query */
-                    return $query->whereCustomerId(auth()->user()->id);
-                }),
             ],
             'type' => [
                 'required',
@@ -42,7 +33,7 @@ class IdentificationRequest extends FormRequest
                 function ($attribute, $value, $fail) {
                     $strlen = strlen($value);
 
-                    switch ((int)request()->input('type')) {
+                    switch ((int)request('type')) {
                         case \App\Enums\Identification::IDENTITY_CARD:
                             if (!in_array($strlen, [9, 12]))
                                 $fail(trans('validation.custom.size.string_2', [
@@ -59,7 +50,7 @@ class IdentificationRequest extends FormRequest
                     }
                 },
                 'max:100',
-                Rule::unique(Identification::class)->ignore($this->input('id')),
+                Rule::unique(Identification::class)->ignore(request('identification')),
             ],
             'issued_name' => [
                 'required',

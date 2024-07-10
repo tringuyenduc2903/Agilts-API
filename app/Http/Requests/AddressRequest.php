@@ -3,10 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Enums\CustomerAddress;
-use App\Models\Address;
-use App\Models\Customer;
 use Illuminate\Contracts\Validation\ValidationRule;
-use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -23,16 +20,6 @@ class AddressRequest extends FormRequest
             'default' => [
                 'required',
                 'boolean',
-                Rule::when(
-                    is_null(auth()->user()->addresses()->whereDefault(true)->first()),
-                    'accepted'
-                ),
-                Rule::unique(Address::class)->where(function (Builder $query) {
-                    /** @var Address $query */
-                    return $query
-                        ->whereAddressableId(auth()->user()->id)
-                        ->whereAddressableType(Customer::class);
-                }),
             ],
             'type' => [
                 'required',

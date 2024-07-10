@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Enums\ProductStatus;
-use App\Enums\ProductType;
 use App\Enums\ProductVisibility;
 use App\Trait\Models\SwitchTimezoneTrait;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -16,11 +14,6 @@ class Product extends Model
 {
     use SoftDeletes;
     use SwitchTimezoneTrait;
-
-    protected $appends = [
-        'min_price',
-        'max_price',
-    ];
 
     /**
      * @return BelongsToMany
@@ -50,26 +43,6 @@ class Product extends Model
     {
         return Attribute::get(
             fn(int $visibility): string => ProductVisibility::valueForKey($visibility)
-        );
-    }
-
-    /**
-     * @return Attribute
-     */
-    protected function status(): Attribute
-    {
-        return Attribute::get(
-            fn(int $status): string => ProductStatus::valueForKey($status)
-        );
-    }
-
-    /**
-     * @return Attribute
-     */
-    protected function type(): Attribute
-    {
-        return Attribute::get(
-            fn(int $type): string => ProductType::valueForKey($type)
         );
     }
 

@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\ProductStatus;
+use App\Enums\ProductType;
 use App\Trait\Models\SwitchTimezoneTrait;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
@@ -42,6 +44,26 @@ class ProductOption extends Model
     {
         return Attribute::get(
             fn(): string => formatPrice($this->price)
+        );
+    }
+
+    /**
+     * @return Attribute
+     */
+    protected function type(): Attribute
+    {
+        return Attribute::get(
+            fn(int $type): string => ProductType::valueForKey($type)
+        );
+    }
+
+    /**
+     * @return Attribute
+     */
+    protected function status(): Attribute
+    {
+        return Attribute::get(
+            fn(int $status): string => ProductStatus::valueForKey($status)
         );
     }
 

@@ -162,7 +162,7 @@ return [
         'birthday' => 'ngày sinh',
         'gender' => 'giới tính',
         'timezone' => 'múi giờ',
-        'default' => 'đặt làm mặc định',
+        'default' => 'mặc định',
         'type' => 'kiểu',
         'country' => 'quốc gia',
         'province' => 'tỉnh/thành phố',

@@ -18,16 +18,14 @@ class BranchController extends Controller
     {
         $branches = Branch::query();
 
-        $filters = ['country', 'province', 'district', 'ward'];
-
-        foreach ($filters as $filter)
+        foreach (['country', 'province', 'district', 'ward'] as $filter)
             if ($request->exists($filter))
                 $branches->whereHas(
                     'address',
-                    fn(Builder $query): Builder => $query->where($filter, $request->input($filter))
+                    fn(Builder $query): Builder => $query->where($filter, request($filter))
                 );
 
-        $paginator = $branches->paginate($request->input('per_page'));
+        $paginator = $branches->paginate(request('per_page'));
 
         return $this->customPaginate($paginator);
     }

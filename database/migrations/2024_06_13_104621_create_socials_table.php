@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create('socials', function (Blueprint $table) {
             $table->id();
             $table->string('provider_id', 30)->unique();
-            $table->string('provider_name', 10);
+            $table->unsignedTinyInteger('provider_name');
             $table->foreignId('customer_id')
                 ->constrained()
                 ->cascadeOnDelete()

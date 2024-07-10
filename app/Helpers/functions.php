@@ -27,8 +27,7 @@ if (!function_exists('productImageUrl')) {
         return app(UrlGenerator::class)
             ->assetFrom(
                 config('filesystems.disks.product.url'),
-                $sort_path,
-                app()->environment('production')
+                $sort_path
             );
     }
 }

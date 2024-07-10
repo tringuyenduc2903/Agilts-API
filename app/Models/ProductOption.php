@@ -31,7 +31,6 @@ class ProductOption extends Model
     protected function casts(): array
     {
         return [
-            'images' => 'array',
             'specifications' => 'array',
         ];
     }
@@ -43,6 +42,23 @@ class ProductOption extends Model
     {
         return Attribute::get(
             fn(): string => formatPrice($this->price)
+        );
+    }
+
+    /**
+     * @return Attribute
+     */
+    protected function images(): Attribute
+    {
+        return Attribute::get(
+            function (string $images): array {
+                $items = json_decode($images);
+
+                foreach ($items as &$item)
+                    $item = productImageUrl($item);
+
+                return array_values($items);
+            }
         );
     }
 }

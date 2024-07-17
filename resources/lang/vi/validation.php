@@ -173,5 +173,11 @@ return [
         'issued_name' => 'nơi cấp',
         'issuance_date' => 'ngày cấp',
         'expiry_date' => 'ngày hết hạn',
+        'content' => 'nội dung',
+        'rate' => 'đánh giá',
+        'images' => 'các hình ảnh',
+        'version' => 'phiên bản',
+        'path' => 'đường dẫn',
+        'image' => 'ảnh',
     ],
 ];

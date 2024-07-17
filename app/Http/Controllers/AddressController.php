@@ -6,17 +6,19 @@ use App\Http\Requests\AddressRequest;
 use App\Models\Address;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class AddressController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return Collection
      */
-    public function index(): Collection
+    public function index(Request $request): Collection
     {
-        return auth()->user()->addresses
+        return $request->user()->addresses
             ->append('type_preview');
     }
 
@@ -30,7 +32,7 @@ class AddressController extends Controller
     {
         $address = Address::make($request->validated());
 
-        auth()->user()->addresses()->save($address);
+        $request->user()->addresses()->save($address);
 
         return response()->json('', 201);
     }
@@ -44,7 +46,7 @@ class AddressController extends Controller
      */
     public function update(int $address_id, AddressRequest $request): JsonResponse
     {
-        auth()->user()->addresses()
+        $request->user()->addresses()
             ->findOrFail($address_id)
             ->update($request->validated());
 
@@ -55,11 +57,12 @@ class AddressController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $address_id
+     * @param Request $request
      * @return JsonResponse
      */
-    public function destroy(int $address_id): JsonResponse
+    public function destroy(int $address_id, Request $request): JsonResponse
     {
-        $address = auth()->user()->addresses()
+        $address = $request->user()->addresses()
             ->findOrFail($address_id);
 
         if ($address->default)

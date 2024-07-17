@@ -147,14 +147,11 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $product_id
+     * @param Product $product
      * @return Product
      */
-    public function show(int $product_id): Product
+    public function show(Product $product): Product
     {
-        return Product::with([
-            'categories',
-            'options',
-        ])->findOrFail($product_id);
+        return $product;
     }
 }

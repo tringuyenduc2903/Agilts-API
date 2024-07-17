@@ -46,9 +46,14 @@ return [
 
         'product' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/product'),
             'url' => env('ADMIN_URL') . '/storage/product',
             'visibility' => 'public',
+            'throw' => false,
+        ],
+
+        'review' => [
+            'driver' => 'local',
+            'root' => storage_path('app/review'),
             'throw' => false,
         ],
 

@@ -12,11 +12,9 @@ Route::localized(function () {
             Route::get('/', fn(Request $request): Customer => $request->user())
                 ->name('user');
 
-            Route::prefix('review')->group(function () {
-                Route::apiResource('/', ReviewCustomerController::class);
+            Route::post('review/image', ReviewFileController::class);
 
-                Route::post('image', ReviewFileController::class);
-            });
+            Route::apiResource('/review', ReviewCustomerController::class);
         });
 
         Route::apiResource('address', AddressController::class)

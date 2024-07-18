@@ -7,7 +7,9 @@ use App\Enums\ProductType;
 use App\Trait\Models\SwitchTimezoneTrait;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class ProductOption extends Model
 {
@@ -15,6 +17,7 @@ class ProductOption extends Model
 
     protected $appends = [
         'price_preview',
+        'review_count',
     ];
 
     /**
@@ -23,6 +26,14 @@ class ProductOption extends Model
     public function details(): HasMany
     {
         return $this->hasMany(ProductDetail::class);
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function product(): BelongsTo
+    {
+        return $this->belongsTo(Product::class);
     }
 
     /**
@@ -35,6 +46,24 @@ class ProductOption extends Model
         return [
             'specifications' => 'array',
         ];
+    }
+
+    /**
+     * @return Attribute
+     */
+    protected function reviewCount(): Attribute
+    {
+        return Attribute::get(
+            fn(): int => $this->reviews()->count()
+        );
+    }
+
+    /**
+     * @return MorphMany
+     */
+    public function reviews(): MorphMany
+    {
+        return $this->morphMany(ProductReview::class, 'parent');
     }
 
     /**

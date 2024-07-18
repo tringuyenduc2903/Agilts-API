@@ -12,10 +12,11 @@ Route::localized(function () {
             Route::get('/', fn(Request $request): Customer => $request->user())
                 ->name('user');
 
-            Route::get('file/image/{path}/{file_name}', [FileController::class, 'image'])
-                ->name('image');
+            Route::prefix('review')->group(function () {
+                Route::apiResource('/', ReviewCustomerController::class);
 
-            Route::post('file/image', [FileController::class, 'uploadImage']);
+                Route::post('image', ReviewFileController::class);
+            });
         });
 
         Route::apiResource('address', AddressController::class)
@@ -36,4 +37,7 @@ Route::localized(function () {
 
     Route::apiResource('product', ProductController::class)
         ->only(['index', 'show']);
+
+    Route::apiResource('review', ReviewController::class)
+        ->only('index');
 });

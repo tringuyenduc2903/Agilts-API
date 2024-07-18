@@ -53,7 +53,9 @@ return [
 
         'review' => [
             'driver' => 'local',
-            'root' => storage_path('app/review'),
+            'root' => 'public/review',
+            'url' => env('APP_URL') . '/storage/review',
+            'visibility' => 'public',
             'throw' => false,
         ],
 

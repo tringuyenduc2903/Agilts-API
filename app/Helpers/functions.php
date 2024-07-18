@@ -3,10 +3,6 @@
 use Illuminate\Routing\UrlGenerator;
 
 if (!function_exists('formatPrice')) {
-    /**
-     * @param float $price
-     * @return string
-     */
     function formatPrice(float $price): string
     {
         return sprintf(
@@ -18,16 +14,23 @@ if (!function_exists('formatPrice')) {
 }
 
 if (!function_exists('productImageUrl')) {
-    /**
-     * @param string $sort_path
-     * @return string
-     */
-    function productImageUrl(string $sort_path): string
+    function productImageUrl(string $path): string
     {
         return app(UrlGenerator::class)
             ->assetFrom(
                 config('filesystems.disks.product.url'),
-                $sort_path
+                $path
+            );
+    }
+}
+
+if (!function_exists('reviewImageUrl')) {
+    function reviewImageUrl(string $path): string
+    {
+        return app(UrlGenerator::class)
+            ->assetFrom(
+                config('filesystems.disks.review.url'),
+                $path
             );
     }
 }

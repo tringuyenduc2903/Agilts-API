@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Searchable;
 
@@ -28,6 +29,32 @@ class Product extends Model
     public function categories(): BelongsToMany
     {
         return $this->belongsToMany(Category::class, 'categories_products');
+    }
+
+    /**
+     * @return HasManyThrough
+     */
+    public function reviews(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            ProductReview::class,
+            ProductOption::class,
+            'product_id',
+            'parent_id',
+            'id',
+            'id'
+        )->where(
+            'parent_type',
+            ProductOption::class
+        );
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function options(): HasMany
+    {
+        return $this->hasMany(ProductOption::class);
     }
 
     /**
@@ -108,42 +135,26 @@ class Product extends Model
     /**
      * @return Attribute
      */
-    protected function minPrice(): Attribute
+    protected function optionsMinPrice(): Attribute
     {
         return Attribute::get(
-            function (): array {
-                $price = $this->options()->min('price');
-
-                return [
-                    'raw' => $price,
-                    'preview' => formatPrice($price)
-                ];
-            }
+            fn(float $min_price): array => [
+                'raw' => $min_price,
+                'preview' => formatPrice($min_price),
+            ]
         );
-    }
-
-    /**
-     * @return HasMany
-     */
-    public function options(): HasMany
-    {
-        return $this->hasMany(ProductOption::class);
     }
 
     /**
      * @return Attribute
      */
-    protected function maxPrice(): Attribute
+    protected function optionsMaxPrice(): Attribute
     {
         return Attribute::get(
-            function (): array {
-                $price = $this->options()->max('price');
-
-                return [
-                    'raw' => $price,
-                    'preview' => formatPrice($price)
-                ];
-            }
+            fn(float $max_price): array => [
+                'raw' => $max_price,
+                'preview' => formatPrice($max_price),
+            ]
         );
     }
 }

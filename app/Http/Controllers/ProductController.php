@@ -8,7 +8,6 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductOption;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
@@ -29,12 +28,6 @@ class ProductController extends Controller
 
         $paginator = $products->paginate(request('per_page'));
 
-        /** @var Collection $paginator */
-        $paginator->append([
-            'min_price',
-            'max_price',
-        ]);
-
         return $this->customPaginate($paginator);
     }
 
@@ -52,41 +45,92 @@ class ProductController extends Controller
                 ProductVisibility::valueForKey(ProductVisibility::CATALOG_AND_SEARCH),
             ])
             ->query(
-                fn(Builder $query): Builder => $query
-                    ->with('options', function (HasMany $query) {
-                        /** @var ProductOption $query */
-                        $query->whereStatus(ProductStatus::IN_STOCK);
+                function (Builder $query) {
+                    $this->withs($query);
+                    $this->sorts($query);
+                    $this->filterByPrice($query);
 
-                        foreach (['minPrice' => '>=', 'maxPrice' => '<='] as $option => $operator)
-                            if (request()->exists($option))
+                    $query
+                        ->with('options', function (HasMany $query) {
+                            /** @var ProductOption $query */
+                            $query->whereStatus(ProductStatus::IN_STOCK);
+
+                            foreach (['type', 'color', 'version'] as $option)
+                                if (request()->exists($option))
+                                    $query->where(
+                                        $option,
+                                        request($option)
+                                    );
+
+                            return $query;
+                        })
+                        ->with('categories', function (BelongsToMany $query) {
+                            /** @var Category $query */
+                            if (request()->exists('category'))
                                 $query->where(
-                                    'price',
-                                    $operator,
-                                    request($option)
+                                    'categories.id',
+                                    request('category')
                                 );
 
-                        foreach (['type', 'color', 'version'] as $option)
-                            if (request()->exists($option))
-                                $query->where(
-                                    $option,
-                                    request($option)
-                                );
-
-                        return $query;
-                    })
-                    ->with('categories', function (BelongsToMany $query) {
-                        /** @var Category $query */
-                        if (request()->exists('category'))
-                            $query->where(
-                                'categories.id',
-                                request('category')
-                            );
-
-                        return $query;
-                    })
+                            return $query;
+                        });
+                }
             );
 
         return $products;
+    }
+
+    /**
+     * @param Builder $query
+     * @return void
+     */
+    protected function withs(Builder $query): void
+    {
+        $query->withMin('options', 'price')
+            ->withMax('options', 'price')
+            ->withAvg('reviews', 'rate');
+    }
+
+    /**
+     * @param Builder $query
+     * @return void
+     */
+    protected function sorts(Builder $query): void
+    {
+        if (request()->exists(['sort_column', 'sort_direction']))
+            match (request('sort_column')) {
+                'name' => $query->orderBy(
+                    request('sort_column'),
+                    request('sort_direction')
+                ),
+                'price' => $query->orderBy(
+                    'options_min_price',
+                    request('sort_direction')
+                ),
+                default => null,
+            };
+        else if (request()->exists('sort_column'))
+            match (request('sort_column')) {
+                'review' => $query->orderByDesc('reviews_avg_rate'),
+                'latest' => $query->latest(),
+                'oldest' => $query->oldest(),
+                default => null,
+            };
+    }
+
+    /**
+     * @param Builder $query
+     * @return void
+     */
+    protected function filterByPrice(Builder $query)
+    {
+        foreach (['minPrice' => '>=', 'maxPrice' => '<='] as $option => $operator)
+            if (request()->exists($option))
+                $query->where(
+                    'options_min_price',
+                    $operator,
+                    request($option)
+                );
     }
 
     /**
@@ -111,16 +155,9 @@ class ProductController extends Controller
                 }
             );
 
-        foreach (['minPrice' => '>=', 'maxPrice' => '<='] as $option => $operator)
-            if (request()->exists($option))
-                $products->whereHas(
-                    'options',
-                    fn(Builder $query): Builder => $query->where(
-                        'price',
-                        $operator,
-                        request($option)
-                    )
-                );
+        $this->withs($products);
+        $this->sorts($products);
+        $this->filterByPrice($products);
 
         foreach (['type', 'color', 'version'] as $option)
             if (request()->exists($option))

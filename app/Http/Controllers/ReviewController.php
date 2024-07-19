@@ -18,7 +18,7 @@ class ReviewController extends Controller
     {
         $reviews = Product::findOrFail(request('product_id'))
             ->reviews()
-            ->latest('updated_at')
+            ->latest()
             ->with('response');
 
         if ($request->exists('rate'))

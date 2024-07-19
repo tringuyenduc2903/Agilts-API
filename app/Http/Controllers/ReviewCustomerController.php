@@ -16,7 +16,7 @@ class ReviewCustomerController extends Controller
     public function index(Request $request): array
     {
         $paginator = $request->user()->reviews()
-            ->latest('product_reviews.updated_at')
+            ->latest()
             ->paginate(request('per_page'));
 
         $paginator

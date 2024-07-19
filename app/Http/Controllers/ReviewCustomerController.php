@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ReviewRequest;
-use App\Models\ProductOption;
-use App\Models\ProductReview;
+use App\Models\Option;
+use App\Models\Review;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -39,9 +39,9 @@ class ReviewCustomerController extends Controller
      *
      * @param int $review_id
      * @param Request $request
-     * @return ProductReview
+     * @return Review
      */
-    public function show(int $review_id, Request $request): ProductReview
+    public function show(int $review_id, Request $request): Review
     {
         return $request->user()->reviews()
             ->with('response')
@@ -57,10 +57,10 @@ class ReviewCustomerController extends Controller
      */
     public function store(ReviewRequest $request): JsonResponse
     {
-        $review = ProductReview::make(array_merge(
+        $review = Review::make(array_merge(
             $request->validated(), [
             'parent_id' => request('version'),
-            'parent_type' => ProductOption::class,
+            'parent_type' => Option::class,
         ]));
 
         $request->user()->reviews()->save($review);

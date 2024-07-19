@@ -95,7 +95,7 @@ class Customer extends Authenticatable implements MustVerifyEmail
      */
     public function reviews(): MorphMany
     {
-        return $this->morphMany(ProductReview::class, 'reviewable');
+        return $this->morphMany(Review::class, 'reviewable');
     }
 
     /**

@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Models\ProductOption;
+use App\Models\Option;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -41,7 +41,7 @@ class ReviewRequest extends FormRequest
             'version' => [
                 'required',
                 'integer',
-                Rule::exists(ProductOption::class, 'id'),
+                Rule::exists(Option::class, 'id'),
             ],
         ];
     }

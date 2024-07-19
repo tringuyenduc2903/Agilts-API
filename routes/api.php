@@ -28,13 +28,12 @@ Route::localized(function () {
     Route::apiResource('branch', BranchController::class)
         ->only('index');
 
-    Route::apiResource('filter-product', FilterProductController::class)
-        ->only('index');
+    Route::get('filter-product', [FilterController::class, 'product']);
 
     Route::apiResource('product', ProductController::class)
         ->only(['index', 'show']);
 
-    Route::get('review/{product_id}', ReviewController::class);
+    Route::get('filter-review/{product_id}', [FilterController::class, 'review']);
 
-    Route::get('filter-review/{product_id}', FilterReviewController::class);
+    Route::get('review/{product_id}', ReviewController::class);
 });

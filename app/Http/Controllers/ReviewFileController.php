@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ReviewFileRequest;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 class ReviewFileController extends Controller
@@ -12,26 +12,18 @@ class ReviewFileController extends Controller
      * @param Request $request
      * @return array
      */
-    public function __invoke(Request $request): array
+    public function __invoke(ReviewFileRequest $request): array
     {
-        Validator::make($request->all(), [
-            'image' => [
-                'required',
-                'image',
-                'mimes:jpeg,png',
-                'mimetypes:image/jpeg,image/png',
-                'max:2048',
-            ],
-        ])->validated();
-
         $image = $request->file('image');
+
+        $mime_type = explode('/', $image->getMimeType());
 
         $file_name = sprintf(
             '%s_%s_%s.%s',
             $request->user()->id,
             str_replace([' ', ':', '-'], '_', now()),
             strtolower(Str::random(15)),
-            explode('/', $image->getMimeType())[1]
+            end($mime_type)
         );
 
         $image->storePubliclyAs(

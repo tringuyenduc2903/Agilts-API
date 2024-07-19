@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Laravel\Scout\Searchable;
 
-class ProductReview extends Model
+class Review extends Model
 {
     use SwitchTimezoneTrait;
     use Searchable;
@@ -69,8 +69,8 @@ class ProductReview extends Model
      */
     public function response(): MorphOne
     {
-        return $this->morphOne(ProductReview::class, 'parent')
-            ->where('parent_type', ProductReview::class)
+        return $this->morphOne(Review::class, 'parent')
+            ->where('parent_type', Review::class)
             ->where('reviewable_type', User::class);
     }
 
@@ -116,7 +116,7 @@ class ProductReview extends Model
     {
         return Attribute::get(
             function (): array {
-                /** @var ProductOption $parent */
+                /** @var Option $parent */
                 $parent = $this->parent;
 
                 return [

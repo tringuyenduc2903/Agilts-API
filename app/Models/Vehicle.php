@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class ProductDetail extends Model
+class Vehicle extends Model
 {
     /**
      * @return BelongsTo

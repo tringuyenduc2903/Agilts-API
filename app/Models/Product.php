@@ -37,15 +37,15 @@ class Product extends Model
     public function reviews(): HasManyThrough
     {
         return $this->hasManyThrough(
-            ProductReview::class,
-            ProductOption::class,
+            Review::class,
+            Option::class,
             'product_id',
             'parent_id',
             'id',
             'id'
         )->where(
             'parent_type',
-            ProductOption::class
+            Option::class
         );
     }
 
@@ -54,7 +54,7 @@ class Product extends Model
      */
     public function options(): HasMany
     {
-        return $this->hasMany(ProductOption::class);
+        return $this->hasMany(Option::class);
     }
 
     /**

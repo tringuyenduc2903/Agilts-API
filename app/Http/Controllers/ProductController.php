@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Enums\ProductStatus;
 use App\Enums\ProductVisibility;
 use App\Models\Category;
+use App\Models\Option;
 use App\Models\Product;
-use App\Models\ProductOption;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -52,7 +52,7 @@ class ProductController extends Controller
 
                     $query
                         ->with('options', function (HasMany $query) {
-                            /** @var ProductOption $query */
+                            /** @var Option $query */
                             $query->whereStatus(ProductStatus::IN_STOCK);
 
                             foreach (['type', 'color', 'version'] as $option)
@@ -150,7 +150,7 @@ class ProductController extends Controller
             ->whereHas(
                 'options',
                 function (Builder $query) {
-                    /** @var ProductOption $query */
+                    /** @var Option $query */
                     return $query->whereStatus(ProductStatus::IN_STOCK);
                 }
             );

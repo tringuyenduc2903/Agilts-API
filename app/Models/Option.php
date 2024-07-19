@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
-class ProductOption extends Model
+class Option extends Model
 {
     use SwitchTimezoneTrait;
 
@@ -25,7 +25,7 @@ class ProductOption extends Model
      */
     public function details(): HasMany
     {
-        return $this->hasMany(ProductDetail::class);
+        return $this->hasMany(Vehicle::class);
     }
 
     /**
@@ -63,7 +63,7 @@ class ProductOption extends Model
      */
     public function reviews(): MorphMany
     {
-        return $this->morphMany(ProductReview::class, 'parent');
+        return $this->morphMany(Review::class, 'parent');
     }
 
     /**

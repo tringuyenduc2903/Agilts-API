@@ -2,17 +2,60 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ProductType;
+use App\Models\Category;
+use App\Models\Option;
 use App\Models\Product;
 
-class FilterReviewController extends Controller
+class FilterController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return array
+     */
+    public function product(): array
+    {
+        return [[
+            'name' => 'type',
+            'label' => trans('Type'),
+            'data' => ProductType::values(),
+        ], [
+            'name' => 'minPrice',
+            'label' => trans('Min price'),
+            'data' => Option::min('price'),
+        ], [
+            'name' => 'maxPrice',
+            'label' => trans('Max price'),
+            'data' => Option::max('price'),
+        ], [
+            'name' => 'color',
+            'label' => trans('Color'),
+            'data' => Option::select('color')
+                ->distinct()
+                ->orderBy('color')
+                ->pluck('color', 'color'),
+        ], [
+            'name' => 'version',
+            'label' => trans('Version'),
+            'data' => Option::select('version')
+                ->distinct()
+                ->orderBy('version')
+                ->pluck('version', 'version'),
+        ], [
+            'name' => 'category',
+            'label' => trans('Category'),
+            'data' => Category::pluck('name', 'id'),
+        ]];
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @param int $product_id
      * @return array
      */
-    public function __invoke(int $product_id): array
+    public function review(int $product_id): array
     {
         $product = Product::findOrFail($product_id);
 
@@ -58,7 +101,7 @@ class FilterReviewController extends Controller
                 'with_image' => trans(
                     ':type (:count)', [
                     'type' => trans('With image'),
-                    'count' => $product->reviews()->whereJsonLength('product_reviews.images', '>', 0)->count(),
+                    'count' => $product->reviews()->whereJsonLength('reviews.images', '>', 0)->count(),
                 ]),
             ],
         ]];

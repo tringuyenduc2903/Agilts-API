@@ -6,7 +6,6 @@ use App\Enums\CustomerAddress;
 use App\Trait\Models\SwitchTimezoneTrait;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Address extends Model
 {
@@ -42,14 +41,6 @@ class Address extends Model
     protected $appends = [
         'address_preview',
     ];
-
-    /**
-     * @return MorphTo
-     */
-    public function addressable(): MorphTo
-    {
-        return $this->morphTo();
-    }
 
     /**
      * @return array

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\ProductOption;
 use App\Models\ProductReview;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class ReviewController extends Controller
@@ -14,19 +14,13 @@ class ReviewController extends Controller
      */
     public function index(Request $request): array
     {
-        $reviews = ProductReview::with('response')
-            ->latest('product_reviews.updated_at')
-            ->whereParentType(ProductOption::class);
+        $reviews = $request->exists('product_id')
+            ? Product::findOrFail(request('product_id'))->reviews()
+            : ProductReview::whereParentType(ProductOption::class);
 
-        if ($request->exists('product_id'))
-            $reviews->whereHasMorph(
-                'parent',
-                ProductOption::class,
-                function (Builder $query) {
-                    /** @var ProductOption $query */
-                    $query->whereProductId(request('product_id'));
-                }
-            );
+        $reviews
+            ->latest('updated_at')
+            ->with('response');
 
         $paginator = $reviews->paginate(request('per_page'));
 

@@ -30,12 +30,16 @@ class FilterProductController extends Controller
         ], [
             'name' => 'color',
             'label' => trans('Color'),
-            'data' => ProductOption::groupBy('id', 'color')
+            'data' => ProductOption::select('color')
+                ->distinct()
+                ->orderBy('color')
                 ->pluck('color', 'color'),
         ], [
             'name' => 'version',
             'label' => trans('Version'),
-            'data' => ProductOption::groupBy('id', 'version')
+            'data' => ProductOption::select('version')
+                ->distinct()
+                ->orderBy('version')
                 ->pluck('version', 'version'),
         ], [
             'name' => 'category',

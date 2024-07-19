@@ -42,5 +42,10 @@
     "Category": "Danh mục",
     "Default :name cannot be deleted.": "Không thể xóa :name mặc định.",
     "identification": "hồ sơ",
-    "address": "địa chỉ"
+    "address": "địa chỉ",
+    "Rate": "Đánh giá",
+    ":number Star (:count)": ":number Sao (:count)",
+    "Negative": "Tiêu cực",
+    "Positive": "Tích cực",
+    "With image": "Có hình ảnh"
 }

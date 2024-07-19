@@ -6,7 +6,7 @@ use App\Enums\ProductType;
 use App\Models\Category;
 use App\Models\ProductOption;
 
-class FilterController extends Controller
+class FilterProductController extends Controller
 {
     /**
      * Display a listing of the resource.

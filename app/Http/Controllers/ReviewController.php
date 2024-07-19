@@ -22,6 +22,15 @@ class ReviewController extends Controller
             ->latest('updated_at')
             ->with('response');
 
+        if ($request->exists('rate'))
+            match (request('rate')) {
+                '1', '2', '3', '4', '5' => $reviews->whereRate(request('rate')),
+                'negative' => $reviews->whereIn('rate', ['1', '2', '3']),
+                'positive' => $reviews->whereIn('rate', ['4', '5']),
+                'with_image' => $reviews->whereJsonLength('images', '>', 0),
+                default => null,
+            };
+
         $paginator = $reviews->paginate(request('per_page'));
 
         $paginator

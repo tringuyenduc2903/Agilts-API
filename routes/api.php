@@ -8,14 +8,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::localized(function () {
     Route::middleware('auth:sanctum')->group(function () {
-        Route::prefix('user')->group(function () {
-            Route::get('/', fn(Request $request): Customer => $request->user())
-                ->name('user');
+        Route::get('user', fn(Request $request): Customer => $request->user())
+            ->name('user');
 
-            Route::post('review/image', ReviewFileController::class);
+        Route::post('review-image', ReviewFileController::class);
 
-            Route::apiResource('/review', ReviewCustomerController::class);
-        });
+        Route::apiResource('review-user', ReviewCustomerController::class);
 
         Route::apiResource('address', AddressController::class)
             ->except('show');

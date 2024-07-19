@@ -97,20 +97,20 @@ class ProductController extends Controller
      */
     protected function sorts(Builder $query): void
     {
-        if (request()->exists(['sort_column', 'sort_direction']))
-            match (request('sort_column')) {
+        if (request()->exists(['sortColumn', 'sortDirection']))
+            match (request('sortColumn')) {
                 'name' => $query->orderBy(
-                    request('sort_column'),
-                    request('sort_direction')
+                    request('sortColumn'),
+                    request('sortDirection')
                 ),
                 'price' => $query->orderBy(
                     'options_min_price',
-                    request('sort_direction')
+                    request('sortDirection')
                 ),
                 default => null,
             };
-        else if (request()->exists('sort_column'))
-            match (request('sort_column')) {
+        else if (request()->exists('sortColumn'))
+            match (request('sortColumn')) {
                 'review' => $query->orderByDesc('reviews_avg_rate'),
                 'latest' => $query->latest(),
                 'oldest' => $query->oldest(),

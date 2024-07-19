@@ -3,22 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-use App\Models\ProductOption;
-use App\Models\ProductReview;
 use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
     /**
      * Display a listing of the resource.
+     *
+     * @param int $product_id
+     * @param Request $request
+     * @return array
      */
-    public function index(Request $request): array
+    public function __invoke(int $product_id, Request $request): array
     {
-        $reviews = $request->exists('product_id')
-            ? Product::findOrFail(request('product_id'))->reviews()
-            : ProductReview::whereParentType(ProductOption::class);
-
-        $reviews
+        $reviews = Product::findOrFail(request('product_id'))
+            ->reviews()
             ->latest('updated_at')
             ->with('response');
 

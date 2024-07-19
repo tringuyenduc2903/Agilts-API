@@ -34,8 +34,7 @@ Route::localized(function () {
     Route::apiResource('product', ProductController::class)
         ->only(['index', 'show']);
 
-    Route::apiResource('review', ReviewController::class)
-        ->only('index');
+    Route::get('review/{product_id}', ReviewController::class);
 
     Route::get('filter-review/{product_id}', FilterReviewController::class);
 });

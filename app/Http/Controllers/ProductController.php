@@ -26,7 +26,7 @@ class ProductController extends Controller
             ? $this->search()
             : $this->catalog();
 
-        $paginator = $products->paginate(request('per_page'));
+        $paginator = $products->paginate(request('perPage'));
 
         return $this->customPaginate($paginator);
     }

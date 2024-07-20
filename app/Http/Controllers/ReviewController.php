@@ -30,7 +30,7 @@ class ReviewController extends Controller
                 default => null,
             };
 
-        $paginator = $reviews->paginate(request('per_page'));
+        $paginator = $reviews->paginate(request('perPage'));
 
         $paginator
             ->setHidden([

@@ -17,7 +17,7 @@ class ReviewCustomerController extends Controller
     {
         $paginator = $request->user()->reviews()
             ->latest()
-            ->paginate(request('per_page'));
+            ->paginate(request('perPage'));
 
         $paginator
             ->setHidden([

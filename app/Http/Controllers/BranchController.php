@@ -25,7 +25,7 @@ class BranchController extends Controller
                     fn(Builder $query): Builder => $query->where($filter, request($filter))
                 );
 
-        $paginator = $branches->paginate(request('per_page'));
+        $paginator = $branches->paginate(request('perPage'));
 
         return $this->customPaginate($paginator);
     }

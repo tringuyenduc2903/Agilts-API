@@ -35,12 +35,11 @@ class Review extends Model
      * @var array<int, string>
      */
     protected $hidden = [
-        'rate',
         'reviewable_id',
         'reviewable_type',
-        'reviewable',
         'parent_id',
         'parent_type',
+        'reviewable',
         'parent',
     ];
 

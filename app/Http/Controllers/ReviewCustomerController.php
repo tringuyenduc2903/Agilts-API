@@ -20,15 +20,7 @@ class ReviewCustomerController extends Controller
             ->paginate(request('perPage'));
 
         $paginator
-            ->setHidden([
-                'reviewable_id',
-                'reviewable_type',
-                'reviewable',
-                'parent_id',
-                'parent_type',
-                'parent',
-                'images',
-            ])
+            ->makeHidden('images')
             ->append('parent_preview');
 
         return $this->customPaginate($paginator);

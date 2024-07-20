@@ -32,16 +32,7 @@ class ReviewController extends Controller
 
         $paginator = $reviews->paginate(request('perPage'));
 
-        $paginator
-            ->setHidden([
-                'reviewable_id',
-                'reviewable_type',
-                'reviewable',
-                'parent_id',
-                'parent_type',
-                'parent',
-            ])
-            ->append('parent_preview');
+        $paginator->append('parent_preview');
 
         return $this->customPaginate($paginator);
     }

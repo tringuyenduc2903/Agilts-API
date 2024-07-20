@@ -21,6 +21,10 @@ class IdentificationRequest extends FormRequest
             'default' => [
                 'required',
                 'boolean',
+                function ($attribute, $value, $fail) {
+                    if (request()->user()->identifications->count() > 4)
+                        $fail(trans('validation.custom.max.identification'));
+                },
             ],
             'type' => [
                 'required',

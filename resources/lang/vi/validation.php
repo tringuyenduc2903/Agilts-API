@@ -153,6 +153,12 @@ return [
         'size' => [
             'string_2' => 'Trường :attribute phải là :size1 ký tự hoặc :size2 ký tự.',
         ],
+        'max' => [
+            'cart' => 'Giỏ hàng chỉ chứa tối đa 1 sản phẩm.',
+            'address' => 'Chỉ chứa tối đa 5 địa chỉ.',
+            'identification' => 'Chỉ chứa tối đa 5 hồ sơ.',
+            'review' => 'Đã đánh giá sản phẩm này.',
+        ],
     ],
     'attributes' => [
         'name' => 'tên',

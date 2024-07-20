@@ -15,11 +15,19 @@ Route::localized(function () {
 
         Route::apiResource('review-user', ReviewCustomerController::class);
 
-        Route::apiResource('address', AddressController::class)
-            ->except('show');
+        Route::apiResources([
+            'address' => AddressController::class,
+            'identification' => IdentificationController::class,
+        ], [
+            'except' => 'show',
+        ]);
 
-        Route::apiResource('identification', IdentificationController::class)
-            ->except('show');
+        Route::apiResources([
+            'cart' => CartController::class,
+            'wishlist' => WishlistController::class,
+        ], [
+            'except' => ['show', 'update'],
+        ]);
 
         Route::apiResource('social', SocialController::class)
             ->only(['index', 'destroy']);

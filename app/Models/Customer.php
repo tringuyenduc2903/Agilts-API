@@ -99,6 +99,26 @@ class Customer extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     * @return HasMany
+     */
+    public function carts(): HasMany
+    {
+        return $this->hasMany(ProductList::class)
+            ->where('type', \App\Enums\ProductList::CART)
+            ->latest();
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function wishlists(): HasMany
+    {
+        return $this->hasMany(ProductList::class)
+            ->where('type', \App\Enums\ProductList::WISHLIST)
+            ->latest();
+    }
+
+    /**
      * Get the attributes that should be cast.
      *
      * @return array<string, string>

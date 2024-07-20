@@ -21,6 +21,16 @@ class ReviewRequest extends FormRequest
                 'required',
                 'string',
                 'max:255',
+                function ($attribute, $value, $fail) {
+                    if (
+                        $this->exists('version') &&
+                        request()->user()->reviews()
+                            ->whereParentType(Option::class)
+                            ->whereParentId($this->input('version'))
+                            ->first()
+                    )
+                        $fail(trans('validation.custom.max.review'));
+                },
             ],
             'rate' => [
                 'required',

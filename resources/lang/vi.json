@@ -47,5 +47,6 @@
     ":number Star (:count)": ":number Sao (:count)",
     "Negative": "Tiêu cực",
     "Positive": "Tích cực",
-    "With image": "Có hình ảnh"
+    "With image": "Có hình ảnh",
+    "The product is already in :list": "Sản phẩm đã có trong :list"
 }

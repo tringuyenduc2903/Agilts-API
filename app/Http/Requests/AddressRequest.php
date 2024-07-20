@@ -20,6 +20,10 @@ class AddressRequest extends FormRequest
             'default' => [
                 'required',
                 'boolean',
+                function ($attribute, $value, $fail) {
+                    if (request()->user()->addresses->count() > 4)
+                        $fail(trans('validation.custom.max.address'));
+                },
             ],
             'type' => [
                 'required',

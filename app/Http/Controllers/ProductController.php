@@ -38,6 +38,8 @@ class ProductController extends Controller
     {
         $products = Product::search(request('search'));
 
+        app()->setLocale('vi');
+
         $products
             ->where('enabled', true)
             ->whereIn('visibility', [

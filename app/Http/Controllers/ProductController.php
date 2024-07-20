@@ -126,7 +126,7 @@ class ProductController extends Controller
     {
         foreach (['minPrice' => '>=', 'maxPrice' => '<='] as $option => $operator)
             if (request()->exists($option))
-                $query->where(
+                $query->having(
                     'options_min_price',
                     $operator,
                     request($option)

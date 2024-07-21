@@ -118,8 +118,12 @@ class Review extends Model
                 /** @var Option $parent */
                 $parent = $this->parent;
 
+                $product = $parent->product;
+
                 return [
-                    'name' => $parent->product->name,
+                    'id' => $product->id,
+                    'name' => $product->name,
+                    'option_id' => $parent->id,
                     'sku' => $parent->sku,
                     'color' => $parent->color,
                 ];

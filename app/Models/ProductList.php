@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Trait\Models\SwitchTimezoneTrait;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -34,9 +35,8 @@ class ProductList extends Model
         'customer_id',
     ];
 
-    protected $with = [
-        'option',
-        'option.product',
+    protected $appends = [
+        'product_preview',
     ];
 
     /**
@@ -45,5 +45,29 @@ class ProductList extends Model
     public function option(): BelongsTo
     {
         return $this->belongsTo(Option::class);
+    }
+
+    /**
+     * @return Attribute
+     */
+    public function productPreview(): Attribute
+    {
+        return Attribute::get(
+            function (): array {
+                /** @var Option $option */
+                $option = $this->option;
+
+                $product = $option->product;
+
+                return [
+                    'id' => $product->id,
+                    'name' => $product->name,
+                    'option_id' => $option->id,
+                    'sku' => $option->sku,
+                    'color' => $option->color,
+                    'categories' => $product->categories->pluck('name')->toArray(),
+                ];
+            }
+        );
     }
 }

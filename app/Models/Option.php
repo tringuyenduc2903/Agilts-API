@@ -36,6 +36,14 @@ class Option extends Model
     }
 
     /**
+     * @return MorphMany
+     */
+    public function reviews(): MorphMany
+    {
+        return $this->morphMany(Review::class, 'parent');
+    }
+
+    /**
      * Get the attributes that should be cast.
      *
      * @return array<string, string>
@@ -45,14 +53,6 @@ class Option extends Model
         return [
             'specifications' => 'array',
         ];
-    }
-
-    /**
-     * @return MorphMany
-     */
-    public function reviews(): MorphMany
-    {
-        return $this->morphMany(Review::class, 'parent');
     }
 
     /**

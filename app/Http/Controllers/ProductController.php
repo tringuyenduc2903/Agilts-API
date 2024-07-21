@@ -156,8 +156,7 @@ class ProductController extends Controller
                     /** @var Option $query */
                     return $query->whereStatus(ProductStatus::IN_STOCK);
                 }
-            )
-            ->with('options');
+            );
 
         $this->withs($products);
         $this->sorts($products);
@@ -193,8 +192,7 @@ class ProductController extends Controller
      */
     public function show(int $product_id): Product
     {
-        return Product::with('options')
-            ->withCount('reviews')
+        return Product::withCount('reviews')
             ->withAvg('reviews', 'rate')
             ->findOrFail($product_id);
     }

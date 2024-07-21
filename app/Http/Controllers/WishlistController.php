@@ -18,7 +18,9 @@ class WishlistController extends Controller
      */
     public function index(Request $request): Collection
     {
-        return $request->user()->wishlists;
+        return $request->user()->wishlists
+            ->makeHidden('option')
+            ->append('product_preview');
     }
 
     /**

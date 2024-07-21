@@ -35,10 +35,6 @@ class ProductList extends Model
         'customer_id',
     ];
 
-    protected $appends = [
-        'product_preview',
-    ];
-
     /**
      * @return BelongsTo
      */

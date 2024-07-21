@@ -18,7 +18,12 @@ class CartController extends Controller
      */
     public function index(Request $request): Collection
     {
-        return $request->user()->carts;
+        return $request->user()->carts()
+            ->with([
+                'option',
+                'option.product',
+            ])
+            ->get();
     }
 
     /**

@@ -155,7 +155,8 @@ class ProductController extends Controller
                     /** @var Option $query */
                     return $query->whereStatus(ProductStatus::IN_STOCK);
                 }
-            );
+            )
+            ->with('options');
 
         $this->withs($products);
         $this->sorts($products);

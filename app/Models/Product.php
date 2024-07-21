@@ -19,7 +19,6 @@ class Product extends Model
     use Searchable;
 
     protected $with = [
-        'options',
         'categories',
     ];
 

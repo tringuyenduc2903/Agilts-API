@@ -17,7 +17,6 @@ class Option extends Model
 
     protected $appends = [
         'price_preview',
-        'review_count',
     ];
 
     /**
@@ -46,16 +45,6 @@ class Option extends Model
         return [
             'specifications' => 'array',
         ];
-    }
-
-    /**
-     * @return Attribute
-     */
-    protected function reviewCount(): Attribute
-    {
-        return Attribute::get(
-            fn(): int => $this->reviews()->count()
-        );
     }
 
     /**

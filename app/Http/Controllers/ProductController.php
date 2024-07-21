@@ -90,6 +90,7 @@ class ProductController extends Controller
     {
         $query->withMin('options', 'price')
             ->withMax('options', 'price')
+            ->withCount('reviews')
             ->withAvg('reviews', 'rate');
     }
 

@@ -193,7 +193,9 @@ class ProductController extends Controller
      */
     public function show(int $product_id): Product
     {
-        return Product::withAvg('reviews', 'rate')
+        return Product::with('options')
+            ->withCount('reviews')
+            ->withAvg('reviews', 'rate')
             ->findOrFail($product_id);
     }
 }

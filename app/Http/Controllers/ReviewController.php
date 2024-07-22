@@ -26,7 +26,7 @@ class ReviewController extends Controller
                 '1', '2', '3', '4', '5' => $reviews->whereRate(request('rate')),
                 'negative' => $reviews->whereIn('rate', ['1', '2', '3']),
                 'positive' => $reviews->whereIn('rate', ['4', '5']),
-                'with_image' => $reviews->whereJsonLength('images', '>', 0),
+                'with_image' => $reviews->whereJsonLength('reviews.images', '>', 0),
                 default => null,
             };
 

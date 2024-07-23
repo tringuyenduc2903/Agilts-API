@@ -95,7 +95,10 @@ class Option extends Model
                 $items = json_decode($images);
 
                 foreach ($items as &$item)
-                    $item = productImageUrl($item);
+                    $item = [
+                        'image' => productImageUrl($item),
+                        'alt' => $this->version,
+                    ];
 
                 return array_values($items);
             }

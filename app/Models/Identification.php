@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\CustomerIdentification;
 use App\Trait\Models\SwitchTimezoneTrait;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
@@ -49,7 +50,7 @@ class Identification extends Model
     protected function typePreview(): Attribute
     {
         return Attribute::get(
-            fn(): ?string => \App\Enums\Identification::valueForKey($this->type)
+            fn(): ?string => CustomerIdentification::valueForKey($this->type)
         );
     }
 }

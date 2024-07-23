@@ -11,7 +11,7 @@ use Rexlabs\Enum\Enum;
  * @method static self CITIZEN_IDENTIFICATION_CARD()
  * @method static self PASSPORT()
  */
-class Identification extends Enum
+class CustomerIdentification extends Enum
 {
     const IDENTITY_CARD = 0;
     const CITIZEN_IDENTIFICATION_CARD = 1;

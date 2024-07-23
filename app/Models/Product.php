@@ -66,6 +66,9 @@ class Product extends Model
     {
         return [
             'enabled' => 'boolean',
+            'must_direct_purchase' => 'boolean',
+            'transportable' => 'boolean',
+            'assistance' => 'boolean',
             'specifications' => 'array',
         ];
     }

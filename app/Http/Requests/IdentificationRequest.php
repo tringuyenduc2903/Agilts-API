@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\CustomerIdentification;
 use App\Models\Identification;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
@@ -29,7 +30,7 @@ class IdentificationRequest extends FormRequest
             'type' => [
                 'required',
                 'integer',
-                Rule::in(\App\Enums\Identification::keys()),
+                Rule::in(CustomerIdentification::keys()),
             ],
             'number' => [
                 'required',
@@ -38,14 +39,14 @@ class IdentificationRequest extends FormRequest
                     $strlen = strlen($value);
 
                     switch ((int)request('type')) {
-                        case \App\Enums\Identification::IDENTITY_CARD:
+                        case CustomerIdentification::IDENTITY_CARD:
                             if (!in_array($strlen, [9, 12]))
                                 $fail(trans('validation.custom.size.string_2', [
                                     'size1' => 9,
                                     'size2' => 12,
                                 ]));
                             break;
-                        case \App\Enums\Identification::CITIZEN_IDENTIFICATION_CARD:
+                        case CustomerIdentification::CITIZEN_IDENTIFICATION_CARD:
                             if ($strlen !== 12)
                                 $fail(trans('validation.size.string', [
                                     'size' => 12,

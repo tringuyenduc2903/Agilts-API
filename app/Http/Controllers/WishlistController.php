@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ProductList;
 use App\Http\Requests\WishlistRequest;
-use App\Models\ProductList;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -31,10 +31,9 @@ class WishlistController extends Controller
      */
     public function store(WishlistRequest $request): JsonResponse
     {
-        ProductList::create([
-            'type' => \App\Enums\ProductList::WISHLIST,
+        $request->user()->wishlists()->create([
+            'type' => ProductList::WISHLIST,
             'option_id' => $request->validated()['version'],
-            'customer_id' => $request->user()->id,
         ]);
 
         return response()->json('', 201);

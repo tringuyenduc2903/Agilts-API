@@ -49,13 +49,11 @@ class ReviewCustomerController extends Controller
      */
     public function store(ReviewRequest $request): JsonResponse
     {
-        $review = Review::make(array_merge(
+        $request->user()->reviews()->create(array_merge(
             $request->validated(), [
             'parent_id' => request('version'),
             'parent_type' => Option::class,
         ]));
-
-        $request->user()->reviews()->save($review);
 
         return response()->json('', 201);
     }

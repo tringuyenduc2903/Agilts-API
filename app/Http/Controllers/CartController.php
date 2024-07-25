@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ProductList;
 use App\Http\Requests\CartRequest;
-use App\Models\ProductList;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -34,10 +34,9 @@ class CartController extends Controller
      */
     public function store(CartRequest $request): JsonResponse
     {
-        ProductList::create([
-            'type' => \App\Enums\ProductList::CART,
+        $request->user()->carts()->create([
+            'type' => ProductList::CART,
             'option_id' => $request->validated()['version'],
-            'customer_id' => $request->user()->id,
         ]);
 
         return response()->json('', 201);

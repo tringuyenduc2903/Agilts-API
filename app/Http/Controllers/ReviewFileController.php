@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ReviewFileRequest;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class ReviewFileController extends Controller
 {
     /**
-     * @param Request $request
+     * @param ReviewFileRequest $request
      * @return array
      */
     public function __invoke(ReviewFileRequest $request): array

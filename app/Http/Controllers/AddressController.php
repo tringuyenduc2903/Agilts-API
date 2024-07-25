@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AddressRequest;
-use App\Models\Address;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -30,9 +29,9 @@ class AddressController extends Controller
      */
     public function store(AddressRequest $request): JsonResponse
     {
-        $address = Address::make($request->validated());
-
-        $request->user()->addresses()->save($address);
+        $request->user()->addresses()->create(
+            $request->validated()
+        );
 
         return response()->json('', 201);
     }

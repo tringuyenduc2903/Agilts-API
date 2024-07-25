@@ -62,6 +62,7 @@ class ProductList extends Model
                     'sku' => $option->sku,
                     'color' => $option->color,
                     'categories' => $product->categories->pluck('name')->toArray(),
+                    'images' => $option->images,
                 ];
             }
         );

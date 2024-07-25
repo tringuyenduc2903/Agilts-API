@@ -6,10 +6,12 @@ use App\Enums\CustomerAddress;
 use App\Trait\Models\SwitchTimezoneTrait;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Address extends Model
 {
     use SwitchTimezoneTrait;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.

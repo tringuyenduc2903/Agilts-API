@@ -183,6 +183,13 @@ return [
             'identification' => 'Can only contains up to 5 identifications.',
             'review' => 'Reviewed this product.',
         ],
+        'required' => [
+            'phone_number' => 'The customer does not have phone number information yet.',
+        ],
+        'product' => [
+            'enabled' => 'The product not available.',
+            'out_of_stock' => 'The product is out of stock.',
+        ],
     ],
 
     /*
@@ -196,6 +203,9 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'invoice_products.*.option' => 'option',
+        'invoice_products.*.amount' => 'amount',
+    ],
 
 ];

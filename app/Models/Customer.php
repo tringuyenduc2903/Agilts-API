@@ -119,6 +119,14 @@ class Customer extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     * @return HasMany
+     */
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Invoice::class);
+    }
+
+    /**
      * Get the attributes that should be cast.
      *
      * @return array<string, string>

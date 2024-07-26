@@ -54,6 +54,8 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
+    'admin_url' => env('ADMIN_LOCAL_URL', 'http://localhost:8001'),
+
     'swagger_url' => env('SWAGGER_URL', 'http://localhost:3001'),
 
     /*

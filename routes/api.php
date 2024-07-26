@@ -29,6 +29,9 @@ Route::localized(function () {
             'except' => ['show', 'update'],
         ]);
 
+        Route::apiResource('order', OrderController::class)
+            ->only(['index', 'show', 'store']);
+
         Route::apiResource('social', SocialController::class)
             ->only(['index', 'destroy']);
     });

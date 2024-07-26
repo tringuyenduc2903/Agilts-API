@@ -130,7 +130,6 @@ class Product extends Model
                 }
 
                 return $items;
-
             }
         );
     }

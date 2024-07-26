@@ -159,6 +159,13 @@ return [
             'identification' => 'Chỉ chứa tối đa 5 hồ sơ.',
             'review' => 'Đã đánh giá sản phẩm này.',
         ],
+        'required' => [
+            'phone_number' => 'Khách hàng chưa có thông tin số điện thoại.',
+        ],
+        'product' => [
+            'enabled' => 'Sản phẩm không khả dụng.',
+            'out_of_stock' => 'Sản phẩm đã hết hàng.',
+        ],
     ],
     'attributes' => [
         'name' => 'tên',
@@ -185,5 +192,14 @@ return [
         'version' => 'phiên bản',
         'path' => 'đường dẫn',
         'image' => 'ảnh',
+        'address' => 'địa chỉ',
+        'identification' => 'hồ sơ',
+        'note' => 'ghi chú',
+        'invoice_products' => 'các sản phẩm',
+        'invoice_products.*.option' => 'tuỳ chọn',
+        'invoice_products.*.amount' => 'số lượng',
+        'vehicle_registration_support' => 'hỗ trợ đăng ký xe',
+        'registration_option' => 'tuỳ chọn trước bạ',
+        'license_plate_registration_option' => 'tuỳ chọn đăng ký biển số',
     ],
 ];

@@ -34,7 +34,7 @@ class Social extends Model
     protected function providerName(): Attribute
     {
         return Attribute::get(
-            fn(int $provider_name): string => Provider::valueForKey($provider_name),
+            fn(int $provider_name): string => Provider::valueForKey($provider_name)
         );
     }
 }

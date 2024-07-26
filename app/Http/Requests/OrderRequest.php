@@ -106,11 +106,11 @@ class OrderRequest extends FormRequest
                             ]));
 
                         if (
-                            $option_db->product->max_amount &&
-                            $value > $option_db->product->max_amount
+                            $option_db->product->must_direct_purchase &&
+                            $value > 1
                         )
                             $fail(trans('validation.max.numeric', [
-                                'max' => $option_db->product->max_amount,
+                                'max' => 1,
                             ]));
                     }
                 },

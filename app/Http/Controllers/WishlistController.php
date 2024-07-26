@@ -33,7 +33,7 @@ class WishlistController extends Controller
     {
         $request->user()->wishlists()->create([
             'type' => ProductList::WISHLIST,
-            'option_id' => $request->validated()['version'],
+            'option_id' => $request->validated('version'),
         ]);
 
         return response()->json('', 201);

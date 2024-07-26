@@ -5,7 +5,7 @@ namespace App\Enums;
 use Rexlabs\Enum\Enum;
 
 /**
- * The Identification enum.
+ * The CustomerIdentification enum.
  *
  * @method static self IDENTITY_CARD()
  * @method static self CITIZEN_IDENTIFICATION_CARD()

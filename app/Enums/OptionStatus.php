@@ -5,12 +5,12 @@ namespace App\Enums;
 use Rexlabs\Enum\Enum;
 
 /**
- * The ProductStatus enum.
+ * The OptionStatus enum.
  *
  * @method static self IN_STOCK()
  * @method static self OUT_OF_STOCK()
  */
-class ProductStatus extends Enum
+class OptionStatus extends Enum
 {
     const IN_STOCK = 0;
     const OUT_OF_STOCK = 1;

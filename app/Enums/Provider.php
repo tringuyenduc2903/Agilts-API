@@ -5,7 +5,7 @@ namespace App\Enums;
 use Rexlabs\Enum\Enum;
 
 /**
- * The Gender enum.
+ * The Provider enum.
  *
  * @method static self GOOGLE()
  * @method static self FACEBOOK()

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\ProductType;
+use App\Enums\OptionType;
 use App\Models\Category;
 use App\Models\Option;
 use App\Models\Product;
@@ -19,7 +19,7 @@ class FilterController extends Controller
         return [[
             'name' => 'type',
             'label' => trans('Type'),
-            'data' => ProductType::values(),
+            'data' => OptionType::values(),
         ], [
             'name' => 'minPrice',
             'label' => trans('Min price'),

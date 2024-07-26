@@ -5,13 +5,13 @@ namespace App\Enums;
 use Rexlabs\Enum\Enum;
 
 /**
- * The ProductType enum.
+ * The OptionType enum.
  *
  * @method static self NEW()
  * @method static self USED()
  * @method static self REFURBISHED()
  */
-class ProductType extends Enum
+class OptionType extends Enum
 {
     const NEW = 0;
     const USED = 1;

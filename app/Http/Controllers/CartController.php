@@ -36,7 +36,7 @@ class CartController extends Controller
     {
         $request->user()->carts()->create([
             'type' => ProductList::CART,
-            'option_id' => $request->validated()['version'],
+            'option_id' => $request->validated('version'),
         ]);
 
         return response()->json('', 201);

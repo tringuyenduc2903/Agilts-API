@@ -68,14 +68,12 @@ class OrderRequest extends FormRequest
             'invoice_products.*.option' => [
                 'required',
                 'integer',
+                Rule::exists(Option::class, 'id'),
                 function ($attribute, $value, $fail) {
                     if (!$value)
                         return;
 
-                    $option = Option::find($value);
-
-                    if (!$option)
-                        $fail(trans('validation.exists'));
+                    $option = Option::findOrFail($value);
 
                     if (!$option->product->enabled)
                         $fail(trans('validation.custom.product.enabled'));

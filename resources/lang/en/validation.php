@@ -178,7 +178,6 @@ return [
             'string_2' => 'The :attribute field must be :size1 characters or :size2 characters.',
         ],
         'max' => [
-            'cart' => 'The cart can only contain a maximum of 1 product.',
             'address' => 'Can only contains up to 5 addresses.',
             'identification' => 'Can only contains up to 5 identifications.',
             'review' => 'Reviewed this product.',
@@ -189,6 +188,7 @@ return [
         'product' => [
             'enabled' => 'The product not available.',
             'out_of_stock' => 'The product is out of stock.',
+            'must_direct_purchase' => 'The product can only be purchased directly.',
         ],
     ],
 

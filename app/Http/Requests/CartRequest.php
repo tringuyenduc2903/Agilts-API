@@ -22,13 +22,18 @@ class CartRequest extends FormRequest
                 'required',
                 'integer',
                 Rule::exists(Option::class, 'id'),
+                function ($attribute, $value, $fail) {
+                    if (!$value)
+                        return;
+
+                    $option = Option::findOrFail($value);
+
+                    if ($option->product->must_direct_purchase)
+                        $fail(trans('validation.custom.product.must_direct_purchase'));
+                },
                 Rule::unique(ProductList::class, 'option_id')
                     ->where('type', \App\Enums\ProductList::CART)
                     ->where('customer_id', request()->user()->id),
-                function ($attribute, $value, $fail) {
-                    if (request()->user()->carts()->first())
-                        $fail(trans('validation.custom.max.cart'));
-                },
             ],
         ];
     }

@@ -48,6 +48,20 @@ class Review extends Model
     ];
 
     /**
+     * @return array|string[]
+     */
+    public function getHidden(): array
+    {
+        if ($this->reviewable_type === User::class)
+            return array_merge($this->hidden, [
+                'rate',
+                'images',
+            ]);
+
+        return $this->hidden;
+    }
+
+    /**
      * @return MorphTo
      */
     public function reviewable(): MorphTo

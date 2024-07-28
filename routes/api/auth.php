@@ -2,7 +2,6 @@
 
 namespace Laravel\Fortify\Http\Controllers;
 
-use App\Http\Controllers\AuthController;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
@@ -10,15 +9,6 @@ use Laravel\Fortify\RoutePath;
 
 Route::get('login', fn(): RedirectResponse => redirect(config('app.frontend_url')))
     ->name('login');
-
-Route::prefix('auth')
-    ->middleware('guest')
-    ->group(function () {
-        Route::get('redirect/{driver_name}', [AuthController::class, 'redirect'])
-            ->name('auth.redirect');
-
-        Route::get('callback/{driver_name}', [AuthController::class, 'callback']);
-    });
 
 Route::middleware(config('fortify.middleware', ['web']))->group(function () {
     $limiter = config('fortify.limiters.login');

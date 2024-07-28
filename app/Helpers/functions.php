@@ -13,24 +13,40 @@ if (!function_exists('formatPrice')) {
     }
 }
 
+if (!function_exists('imageUrl')) {
+    function imageUrl(string $storage_path, string $path): string
+    {
+        return app(UrlGenerator::class)->assetFrom($storage_path, $path);
+    }
+}
+
+
 if (!function_exists('productImageUrl')) {
     function productImageUrl(string $path): string
     {
-        return app(UrlGenerator::class)
-            ->assetFrom(
-                config('filesystems.disks.product.url'),
-                $path
-            );
+        return imageUrl(
+            config('filesystems.disks.product.url'),
+            $path
+        );
+    }
+}
+
+if (!function_exists('branchImageUrl')) {
+    function branchImageUrl(string $path): string
+    {
+        return imageUrl(
+            config('filesystems.disks.branch.url'),
+            $path
+        );
     }
 }
 
 if (!function_exists('reviewImageUrl')) {
     function reviewImageUrl(string $path): string
     {
-        return app(UrlGenerator::class)
-            ->assetFrom(
-                config('filesystems.disks.review.url'),
-                $path
-            );
+        return imageUrl(
+            config('filesystems.disks.review.url'),
+            $path
+        );
     }
 }

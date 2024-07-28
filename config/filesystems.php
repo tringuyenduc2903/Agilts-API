@@ -51,6 +51,13 @@ return [
             'throw' => false,
         ],
 
+        'branch' => [
+            'driver' => 'local',
+            'url' => env('ADMIN_URL') . '/storage/branch',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
         'review' => [
             'driver' => 'local',
             'root' => 'public/review',

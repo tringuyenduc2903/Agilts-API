@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Responses\LoginResponse;
 use CodeZero\LocalizedRoutes\Middleware\SetLocale;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -38,4 +39,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })
+    ->withBindings([
+        \Laravel\Fortify\Http\Responses\LoginResponse::class => LoginResponse::class,
+    ])
     ->create();

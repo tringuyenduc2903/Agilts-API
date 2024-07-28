@@ -21,7 +21,6 @@ return [
 
     'allowed_origins' => [
         env('FRONTEND_URL', 'http://localhost:3000'),
-        env('TEST_URL', 'http://localhost:3000'),
         env('SWAGGER_URL', 'http://localhost:3001'),
     ],
 

@@ -17,6 +17,8 @@ return [
 
     'guard' => 'web',
 
+    'guard_auth' => 'sanctum',
+
     /*
     |--------------------------------------------------------------------------
     | Fortify Password Broker

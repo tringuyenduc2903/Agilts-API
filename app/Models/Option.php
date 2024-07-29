@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Enums\OptionStatus;
-use App\Enums\OptionType;
 use App\Trait\Models\SwitchTimezoneTrait;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
@@ -17,8 +16,13 @@ class Option extends Model
     use SwitchTimezoneTrait;
     use SoftDeletes;
 
-    protected $appends = [
-        'price_preview',
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'quantity',
     ];
 
     /**
@@ -60,10 +64,10 @@ class Option extends Model
     /**
      * @return Attribute
      */
-    protected function pricePreview(): Attribute
+    protected function price(): Attribute
     {
         return Attribute::get(
-            fn(): string => formatPrice($this->price)
+            fn(float $price): array => pricePreview($price)
         );
     }
 
@@ -73,7 +77,7 @@ class Option extends Model
     protected function type(): Attribute
     {
         return Attribute::get(
-            fn(int $type): string => OptionType::valueForKey($type)
+            fn(float $price): array => pricePreview($price)
         );
     }
 
@@ -97,10 +101,10 @@ class Option extends Model
                 $items = json_decode($images);
 
                 foreach ($items as &$item)
-                    $item = [
-                        'image' => productImageUrl($item),
-                        'alt' => $this->version,
-                    ];
+                    $item = imagePreview(
+                        productImageUrl($item),
+                        $this->version
+                    );
 
                 return array_values($items);
             }

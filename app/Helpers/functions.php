@@ -50,3 +50,23 @@ if (!function_exists('reviewImageUrl')) {
         );
     }
 }
+
+if (!function_exists('pricePreview')) {
+    function pricePreview(float $price): array
+    {
+        return [
+            'raw' => $price,
+            'preview' => formatPrice($price),
+        ];
+    }
+}
+
+if (!function_exists('imagePreview')) {
+    function imagePreview(string $image, string $alt = ''): array
+    {
+        return [
+            'image' => $image,
+            'alt' => $alt,
+        ];
+    }
+}

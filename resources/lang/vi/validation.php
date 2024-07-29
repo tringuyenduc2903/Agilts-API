@@ -201,5 +201,7 @@ return [
         'vehicle_registration_support' => 'hỗ trợ đăng ký xe',
         'registration_option' => 'tuỳ chọn trước bạ',
         'license_plate_registration_option' => 'tuỳ chọn đăng ký biển số',
+        'shipping_type' => 'loại vận chuyển',
+        'transaction_type' => 'loại giao dịch',
     ],
 ];

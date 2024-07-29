@@ -97,7 +97,9 @@ class Review extends Model
                 $items = json_decode($images);
 
                 foreach ($items as &$item)
-                    $item = reviewImageUrl($item);
+                    $item = imagePreview(
+                        reviewImageUrl($item)
+                    );
 
                 return array_values($items);
             },

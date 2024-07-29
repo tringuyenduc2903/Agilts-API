@@ -25,11 +25,6 @@ class InvoiceProduct extends Model
         'vehicle_id',
     ];
 
-    protected $appends = [
-        'price_preview',
-        'value_added_tax_preview',
-    ];
-
     /**
      * @return BelongsTo
      */
@@ -49,20 +44,20 @@ class InvoiceProduct extends Model
     /**
      * @return Attribute
      */
-    protected function pricePreview(): Attribute
+    protected function price(): Attribute
     {
         return Attribute::get(
-            fn(): string => formatPrice($this->price)
+            fn(float $price): array => pricePreview($price)
         );
     }
 
     /**
      * @return Attribute
      */
-    protected function valueAddedTaxPreview(): Attribute
+    protected function valueAddedTax(): Attribute
     {
         return Attribute::get(
-            fn(): string => formatPrice($this->value_added_tax)
+            fn(float $price): array => pricePreview($price)
         );
     }
 }

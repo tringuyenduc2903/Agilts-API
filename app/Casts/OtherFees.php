@@ -2,12 +2,10 @@
 
 namespace App\Casts;
 
-use App\Enums\LicensePlateRegistrationOption;
-use App\Enums\RegistrationOption;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
 
-class OtherFields implements CastsAttributes
+class OtherFees implements CastsAttributes
 {
     /**
      * Cast the given value.
@@ -20,18 +18,20 @@ class OtherFields implements CastsAttributes
      */
     public function get(Model $model, string $key, mixed $value, array $attributes): object
     {
-        $other_fields = json_decode($value);
+        $other_fees = json_decode($value);
 
-        if (isset($other_fields->vehicle_registration_support))
-            $other_fields->vehicle_registration_support = (bool)$other_fields->vehicle_registration_support;
+        foreach ([
+                     'vehicle_registration_support_fee',
+                     'registration_fee',
+                     'license_plate_registration_fee',
+                 ] as $key)
+            if (isset($other_fees->$key))
+                $other_fees->$key = [
+                    'raw' => $other_fees->$key,
+                    'preview' => formatPrice($other_fees->$key),
+                ];
 
-        if (isset($other_fields->registration_option))
-            $other_fields->registration_option = RegistrationOption::valueForKey($other_fields->registration_option);
-
-        if (isset($other_fields->license_plate_registration_option))
-            $other_fields->license_plate_registration_option = LicensePlateRegistrationOption::valueForKey($other_fields->license_plate_registration_option);
-
-        return $other_fields;
+        return $other_fees;
     }
 
     /**

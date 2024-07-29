@@ -29,7 +29,9 @@ class Branch extends Model
     protected function image(): Attribute
     {
         return Attribute::get(
-            fn(?string $image): ?string => $image ? branchImageUrl($image) : null
+            fn(?string $image): ?array => $image
+                ? imagePreview(branchImageUrl($image))
+                : null
         );
     }
 }

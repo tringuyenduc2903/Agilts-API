@@ -20,7 +20,7 @@ class InvoiceProductObserver
                 'quantity' => $option->quantity - $invoice_product->amount,
             ]);
 
-        request()->user()->carts
+        request()->user()->carts()
             ->whereOptionId($option->id)
             ->delete();
     }

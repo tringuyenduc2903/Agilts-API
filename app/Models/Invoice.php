@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\OtherFees;
 use App\Casts\OtherFields;
 use App\Enums\OrderStatus;
 use App\Trait\Models\SwitchTimezoneTrait;
@@ -22,20 +23,17 @@ class Invoice extends Model
     protected $fillable = [
         'tax',
         'shipping_fee',
-        'vehicle_registration_support_fee',
-        'registration_fee',
-        'license_plate_registration_fee',
+        'handling_fee',
+        'other_fees',
         'total',
         'status',
         'note',
+        'shipping_type',
+        'transaction_type',
         'other_fields',
         'address_id',
         'identification_id',
         'customer_id',
-    ];
-
-    protected $appends = [
-        'total_preview',
     ];
 
     /**
@@ -78,6 +76,7 @@ class Invoice extends Model
     protected function casts(): array
     {
         return [
+            'other_fees' => OtherFees::class,
             'other_fields' => OtherFields::class,
         ];
     }
@@ -95,60 +94,40 @@ class Invoice extends Model
     /**
      * @return Attribute
      */
-    protected function taxPreview(): Attribute
+    protected function tax(): Attribute
     {
         return Attribute::get(
-            fn(): string => formatPrice($this->tax)
+            fn(float $price): array => pricePreview($price)
         );
     }
 
     /**
      * @return Attribute
      */
-    protected function shippingFeePreview(): Attribute
+    protected function shippingFee(): Attribute
     {
         return Attribute::get(
-            fn(): string => formatPrice($this->shipping_fee)
+            fn(float $price): array => pricePreview($price)
         );
     }
 
     /**
      * @return Attribute
      */
-    protected function vehicleRegistrationSupportFeePreview(): Attribute
+    protected function handlingFee(): Attribute
     {
         return Attribute::get(
-            fn(): string => formatPrice($this->vehicle_registration_support_fee)
+            fn(float $price): array => pricePreview($price)
         );
     }
 
     /**
      * @return Attribute
      */
-    protected function registrationFeePreview(): Attribute
+    protected function total(): Attribute
     {
         return Attribute::get(
-            fn(): string => formatPrice($this->registration_fee)
-        );
-    }
-
-    /**
-     * @return Attribute
-     */
-    protected function licensePlateRegistrationFeePreview(): Attribute
-    {
-        return Attribute::get(
-            fn(): string => formatPrice($this->license_plate_registration_fee)
-        );
-    }
-
-    /**
-     * @return Attribute
-     */
-    protected function totalPreview(): Attribute
-    {
-        return Attribute::get(
-            fn(): string => formatPrice($this->total)
+            fn(float $price): array => pricePreview($price)
         );
     }
 }

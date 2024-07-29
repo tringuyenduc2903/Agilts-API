@@ -138,10 +138,7 @@ class Product extends Model
     protected function optionsMinPrice(): Attribute
     {
         return Attribute::get(
-            fn(float $min_price): array => [
-                'raw' => $min_price,
-                'preview' => formatPrice($min_price),
-            ]
+            fn(float $price): array => pricePreview($price)
         );
     }
 
@@ -151,10 +148,7 @@ class Product extends Model
     protected function optionsMaxPrice(): Attribute
     {
         return Attribute::get(
-            fn(float $max_price): array => [
-                'raw' => $max_price,
-                'preview' => formatPrice($max_price),
-            ]
+            fn(float $price): array => pricePreview($price)
         );
     }
 }

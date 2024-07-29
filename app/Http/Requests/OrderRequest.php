@@ -5,6 +5,8 @@ namespace App\Http\Requests;
 use App\Enums\LicensePlateRegistrationOption;
 use App\Enums\OptionStatus;
 use App\Enums\RegistrationOption;
+use App\Enums\ShippingType;
+use App\Enums\TransactionType;
 use App\Models\Address;
 use App\Models\Customer;
 use App\Models\Identification;
@@ -86,6 +88,7 @@ class OrderRequest extends FormRequest
                 'required',
                 'integer',
                 'min:1',
+                'max:65535',
                 function ($attribute, $value, $fail) {
                     if ($value < 1)
                         return;
@@ -128,6 +131,16 @@ class OrderRequest extends FormRequest
                 'required_if:vehicle_registration_support,true',
                 'integer',
                 Rule::in(LicensePlateRegistrationOption::keys()),
+            ],
+            'shipping_type' => [
+                'required',
+                'integer',
+                Rule::in(ShippingType::keys()),
+            ],
+            'transaction_type' => [
+                'required',
+                'integer',
+                Rule::in(TransactionType::keys()),
             ],
         ];
     }

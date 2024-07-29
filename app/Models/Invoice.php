@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Casts\OtherFees;
 use App\Casts\OtherFields;
 use App\Enums\OrderStatus;
+use App\Enums\ShippingType;
+use App\Enums\TransactionType;
 use App\Trait\Models\SwitchTimezoneTrait;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
@@ -128,6 +130,26 @@ class Invoice extends Model
     {
         return Attribute::get(
             fn(float $price): array => pricePreview($price)
+        );
+    }
+
+    /**
+     * @return Attribute
+     */
+    protected function shippingType(): Attribute
+    {
+        return Attribute::get(
+            fn(int $shipping_type): string => ShippingType::valueForKey($shipping_type)
+        );
+    }
+
+    /**
+     * @return Attribute
+     */
+    protected function transactionType(): Attribute
+    {
+        return Attribute::get(
+            fn(int $transaction_type): string => TransactionType::valueForKey($transaction_type)
         );
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\OptionStatus;
+use App\Enums\OptionType;
 use App\Trait\Models\SwitchTimezoneTrait;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
@@ -77,7 +78,7 @@ class Option extends Model
     protected function type(): Attribute
     {
         return Attribute::get(
-            fn(float $price): array => pricePreview($price)
+            fn(int $type): string => OptionType::valueForKey($type)
         );
     }
 

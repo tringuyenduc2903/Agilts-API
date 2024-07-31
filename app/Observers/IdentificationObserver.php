@@ -7,29 +7,26 @@ use App\Models\Identification;
 class IdentificationObserver
 {
     /**
-     * Handle the Identification "updated" event.
+     * Handle the Identification "updating" event.
      */
-    public function updated(Identification $identification): void
+    public function updating(Identification $identification): void
     {
-        $this->created($identification);
+        $this->creating($identification);
     }
 
     /**
-     * Handle the Identification "created" event.
+     * Handle the Identification "creating" event.
      */
-    public function created(Identification $identification): void
+    public function creating(Identification $identification): void
     {
         $identifications = auth()->user()->identifications();
 
         if ($identification->default)
             $identification->whereDefault(true)
-                ->whereNot('id', $identification->id)
                 ->update(['default' => false]);
         else
             $identifications->whereDefault(true)->firstOr(
-                fn() => $identification
-                    ->fill(['default' => true])
-                    ->save()
+                fn() => $identification->default = true
             );
     }
 }

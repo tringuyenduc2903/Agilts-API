@@ -8,22 +8,22 @@ use App\Models\Option;
 class OptionObserver
 {
     /**
-     * Handle the Option "updated" event.
+     * Handle the Option "updating" event.
      */
-    public function updated(Option $option): void
+    public function updating(Option $option): void
     {
-        $this->created($option);
+        $this->creating($option);
     }
 
     /**
-     * Handle the Option "created" event.
+     * Handle the Option "creating" event.
      */
-    public function created(Option $option): void
+    public function creating(Option $option): void
     {
         if (
             $option->quantity == 0 &&
             $option->status == OptionStatus::IN_STOCK
         )
-            $option->update(['status' => OptionStatus::OUT_OF_STOCK]);
+            $option->status = OptionStatus::OUT_OF_STOCK;
     }
 }

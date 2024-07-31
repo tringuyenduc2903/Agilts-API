@@ -50,14 +50,4 @@ class InvoiceProduct extends Model
             fn(float $price): array => pricePreview($price)
         );
     }
-
-    /**
-     * @return Attribute
-     */
-    protected function valueAddedTax(): Attribute
-    {
-        return Attribute::get(
-            fn(float $price): array => pricePreview($price)
-        );
-    }
 }

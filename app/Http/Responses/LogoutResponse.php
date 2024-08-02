@@ -18,7 +18,7 @@ class LogoutResponse implements LogoutResponseContract
      */
     public function toResponse($request): JsonResponse|Response
     {
-        $request->user()->currentAccessToken()->delete();
+        $request->user()->tokens()->whereName('mobile-auth')->delete();
 
         return $request->wantsJson()
             ? response('', 204)

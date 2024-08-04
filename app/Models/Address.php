@@ -36,8 +36,8 @@ class Address extends Model
      * @var array<int, string>
      */
     protected $hidden = [
-        'addressable_type',
         'addressable_id',
+        'addressable_type',
     ];
 
     protected $appends = [

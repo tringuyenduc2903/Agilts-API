@@ -187,13 +187,16 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $product_id
+     * @param string $product_id
      * @return Product
      */
-    public function show(int $product_id): Product
+    public function show(string $product_id): Product
     {
-        return Product::withCount('reviews')
+        return Product::with('seo')
+            ->withCount('reviews')
             ->withAvg('reviews', 'rate')
-            ->findOrFail($product_id);
+            ->orWhere('id', $product_id)
+            ->orWhere('search_url', $product_id)
+            ->firstOrFail();
     }
 }

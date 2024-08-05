@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\ProductType;
 use App\Models\Option;
 use App\Models\ProductList;
 use Illuminate\Contracts\Validation\ValidationRule;
@@ -28,8 +29,8 @@ class CartRequest extends FormRequest
 
                     $option = Option::findOrFail($value);
 
-                    if ($option->product->must_direct_purchase)
-                        $fail(trans('validation.custom.product.must_direct_purchase'));
+                    if ($option->product->type == ProductType::MOTOR_CYCLE)
+                        $fail(trans('validation.custom.product.motor_cycle'));
                 },
                 Rule::unique(ProductList::class, 'option_id')
                     ->where('type', \App\Enums\ProductList::CART)

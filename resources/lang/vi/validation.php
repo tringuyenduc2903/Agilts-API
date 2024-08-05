@@ -164,7 +164,7 @@ return [
         'product' => [
             'enabled' => 'Sản phẩm không khả dụng.',
             'out_of_stock' => 'Sản phẩm đã hết hàng.',
-            'must_direct_purchase' => 'Sản phẩm chỉ có thể mua trực tiếp.',
+            'motor_cycle' => 'Sản phẩm chỉ có thể mua trực tiếp.',
         ],
     ],
     'attributes' => [

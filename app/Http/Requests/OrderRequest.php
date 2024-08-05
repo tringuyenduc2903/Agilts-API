@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Enums\LicensePlateRegistrationOption;
 use App\Enums\OptionStatus;
+use App\Enums\ProductType;
 use App\Enums\RegistrationOption;
 use App\Enums\ShippingType;
 use App\Enums\TransactionType;
@@ -59,7 +60,7 @@ class OrderRequest extends FormRequest
 
                         Option::whereIn('id', $options)
                             ->each(function (Option $option) use (&$result) {
-                                if ($option->product->must_direct_purchase)
+                                if ($option->product->type == ProductType::MOTOR_CYCLE)
                                     $result = true;
                             });
                     }
@@ -109,7 +110,7 @@ class OrderRequest extends FormRequest
                             ]));
 
                         if (
-                            $option_db->product->must_direct_purchase &&
+                            $option_db->product->type == ProductType::MOTOR_CYCLE &&
                             $value > 1
                         )
                             $fail(trans('validation.max.numeric', [

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ProductType;
 use App\Enums\ProductVisibility;
 use App\Trait\Models\SwitchTimezoneTrait;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -67,6 +68,18 @@ class Product extends Model
     }
 
     /**
+     * Determine if the model should be searchable.
+     */
+    public function shouldBeSearchable(): bool
+    {
+        return $this->enabled && in_array(
+                $this->getRawOriginal('visibility'), [
+                ProductVisibility::SEARCH,
+                ProductVisibility::CATALOG_AND_SEARCH,
+            ]);
+    }
+
+    /**
      * Get the attributes that should be cast.
      *
      * @return array<string, string>
@@ -75,7 +88,6 @@ class Product extends Model
     {
         return [
             'enabled' => 'boolean',
-            'must_direct_purchase' => 'boolean',
             'specifications' => 'array',
         ];
     }
@@ -87,6 +99,16 @@ class Product extends Model
     {
         return Attribute::get(
             fn(int $visibility): string => ProductVisibility::valueForKey($visibility)
+        );
+    }
+
+    /**
+     * @return Attribute
+     */
+    protected function type(): Attribute
+    {
+        return Attribute::get(
+            fn(int $type): string => ProductType::valueForKey($type)
         );
     }
 

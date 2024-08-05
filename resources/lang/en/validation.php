@@ -188,7 +188,7 @@ return [
         'product' => [
             'enabled' => 'The product not available.',
             'out_of_stock' => 'The product is out of stock.',
-            'must_direct_purchase' => 'The product can only be purchased directly.',
+            'motor_cycle' => 'The product can only be purchased directly.',
         ],
     ],
 

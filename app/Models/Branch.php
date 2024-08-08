@@ -11,6 +11,15 @@ class Branch extends Model
 {
     use SwitchTimezoneTrait;
 
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'alt',
+    ];
+
     protected $with = [
         'address',
     ];
@@ -32,7 +41,7 @@ class Branch extends Model
             fn(?string $image): ?array => $image
                 ? imagePreview(
                     branchImageUrl($image),
-                    $this->name
+                    $this->alt
                 )
                 : null
         );

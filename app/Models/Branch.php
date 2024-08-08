@@ -30,7 +30,10 @@ class Branch extends Model
     {
         return Attribute::get(
             fn(?string $image): ?array => $image
-                ? imagePreview(branchImageUrl($image))
+                ? imagePreview(
+                    branchImageUrl($image),
+                    $this->name
+                )
                 : null
         );
     }

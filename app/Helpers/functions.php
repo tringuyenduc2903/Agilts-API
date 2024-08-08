@@ -20,7 +20,6 @@ if (!function_exists('imageUrl')) {
     }
 }
 
-
 if (!function_exists('productImageUrl')) {
     function productImageUrl(string $path): string
     {

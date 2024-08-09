@@ -7,7 +7,7 @@ if (!function_exists('formatPrice')) {
     {
         return sprintf(
             '%s %s',
-            number_format($price, 2, ',', '.'),
+            number_format($price, 0, ',', '.'),
             'VND'
         );
     }

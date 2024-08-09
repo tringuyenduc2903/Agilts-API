@@ -28,7 +28,11 @@ class OrderController extends Controller
         if ($request->exists('status'))
             $orders = $orders->whereStatus(request('status'));
 
-        $orders->with('invoice_products');
+        $orders->with([
+            'invoice_products',
+            'invoice_products.option',
+            'invoice_products.option.product',
+        ]);
 
         $paginator = $orders->paginate(request('perPage'));
 
@@ -50,6 +54,7 @@ class OrderController extends Controller
                 'identification',
                 'invoice_products',
                 'invoice_products.option',
+                'invoice_products.option.product',
             ])
             ->findOrFail($order_id);
     }

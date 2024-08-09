@@ -11,7 +11,11 @@ class AddressObserver
      */
     public function updating(Address $address): void
     {
-        $this->creating($address);
+        auth()->user()->addresses()
+            ->whereDefault(true)
+            ->firstOr(
+                fn() => $address->default = true
+            );
     }
 
     /**
@@ -21,12 +25,12 @@ class AddressObserver
     {
         $addresses = auth()->user()->addresses();
 
-        if ($address->default)
-            $address->whereDefault(true)
-                ->update(['default' => false]);
-        else
-            $addresses->whereDefault(true)->firstOr(
-                fn() => $address->default = true
-            );
+        $address->default
+            ? $address->whereDefault(true)->update([
+            'default' => false,
+        ])
+            : $addresses->whereDefault(true)->firstOr(
+            fn() => $address->default = true
+        );
     }
 }

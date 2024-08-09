@@ -11,7 +11,11 @@ class IdentificationObserver
      */
     public function updating(Identification $identification): void
     {
-        $this->creating($identification);
+        auth()->user()->identifications()
+            ->whereDefault(true)
+            ->firstOr(
+                fn() => $identification->default = true
+            );
     }
 
     /**
@@ -21,12 +25,12 @@ class IdentificationObserver
     {
         $identifications = auth()->user()->identifications();
 
-        if ($identification->default)
-            $identification->whereDefault(true)
-                ->update(['default' => false]);
-        else
-            $identifications->whereDefault(true)->firstOr(
-                fn() => $identification->default = true
-            );
+        $identification->default
+            ? $identification->whereDefault(true)->update([
+            'default' => false,
+        ])
+            : $identifications->whereDefault(true)->firstOr(
+            fn() => $identification->default = true
+        );
     }
 }

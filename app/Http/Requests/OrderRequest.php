@@ -60,7 +60,7 @@ class OrderRequest extends FormRequest
 
                         Option::whereIn('id', $options)
                             ->each(function (Option $option) use (&$result) {
-                                if ($option->product->type == ProductType::MOTOR_CYCLE)
+                                if ($option->product->getRawOriginal('type') == ProductType::MOTOR_CYCLE)
                                     $result = true;
                             });
                     }
@@ -110,7 +110,7 @@ class OrderRequest extends FormRequest
                             ]));
 
                         if (
-                            $option_db->product->type == ProductType::MOTOR_CYCLE &&
+                            $option_db->product->getRawOriginal('type') == ProductType::MOTOR_CYCLE &&
                             $value > 1
                         )
                             $fail(trans('validation.max.numeric', [

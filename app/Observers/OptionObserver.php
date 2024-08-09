@@ -22,7 +22,7 @@ class OptionObserver
     {
         if (
             $option->quantity == 0 &&
-            $option->status == OptionStatus::IN_STOCK
+            $option->getRawOriginal('status') == OptionStatus::IN_STOCK
         )
             $option->status = OptionStatus::OUT_OF_STOCK;
     }

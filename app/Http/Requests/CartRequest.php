@@ -29,7 +29,7 @@ class CartRequest extends FormRequest
 
                     $option = Option::findOrFail($value);
 
-                    if ($option->product->type == ProductType::MOTOR_CYCLE)
+                    if ($option->product->getRawOriginal('type') == ProductType::MOTOR_CYCLE)
                         $fail(trans('validation.custom.product.motor_cycle'));
                 },
                 Rule::unique(ProductList::class, 'option_id')
